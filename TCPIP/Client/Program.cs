@@ -12,8 +12,33 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("客户端");
+            Console.WriteLine("客户端：张飞");
+           // Test_Sync();
+            Test_Async();
 
+        }
+        static void Test_Async()
+        {
+            Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
+
+
+            Console.WriteLine("收到" + Common.Socket_Get(clientSocket)); //收
+
+            while(true)
+            { 
+                string data = Console.ReadLine(); 
+                Console.Write(data); 
+                Common.Socket_Send(clientSocket, data); 
+            }
+
+
+            Console.ReadKey();
+            clientSocket.Close();
+        }
+
+
+        static void Test_Sync()
+        {
             Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
 
 

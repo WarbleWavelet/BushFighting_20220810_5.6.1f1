@@ -51,7 +51,13 @@ public class Common
             return System.Text.Encoding.UTF8.GetString(data, 0, count);
         }
 
+    public static string Bin2StringAsync(Socket socket)
+    {
+        byte[] data = new byte[1024];
+        int count = socket.Receive(data);
 
+        return System.Text.Encoding.UTF8.GetString(data, 0, count);
+    }
 
 
     public static string Socket_Get(Socket socket)
@@ -59,13 +65,21 @@ public class Common
         return Bin2String(socket);
     }
 
-
+    /// <summary>
+    /// from发送msg到...
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="msg"></param>
     public static void Socket_Send(Socket from, string msg)
     {
         from.Send(Common.String2Bin(msg));
     }
 
-
+    /// <summary>
+    /// ...发送msg到to
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="to"></param>
     public static void Socket_Send(string msg, Socket to)
     {
         to.Send(Common.String2Bin(msg));
