@@ -70,9 +70,10 @@ public class Common
     /// </summary>
     /// <param name="from"></param>
     /// <param name="msg"></param>
-    public static void Socket_Send(Socket from, string msg)
+    public static void Socket_Send<T>(Socket from, T msg)
     {
-        from.Send(Common.String2Bin(msg));
+        
+        from.Send(Common.String2Bin(msg.ToString()));
     }
 
     /// <summary>

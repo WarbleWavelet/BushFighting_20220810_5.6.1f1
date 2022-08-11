@@ -13,14 +13,57 @@ namespace Client
         static void Main(string[] args)
         {
             Console.WriteLine("客户端：张飞");
-           // Test01_Sync();
-           // Test11_Async();
-            Test12_Async();
-
+            // Test01_Sync();
+            // Test11_Async();
+            //Test12_Async();
+            //Test21_SubPack_Int();
+           Test21_SubPack_String();
         }
 
+        /// <summary>
+        /// 粘包
+        /// </summary>
+        static void Test21_SubPack_Int()
+        {
+
+            Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
+            Console.WriteLine("收到" + Common.Socket_Get(clientSocket)); //收
+            for (int i = 0; i <100 ; i++)
+            {
+                Common.Socket_Send(clientSocket, i);
+                Common.Socket_Send(clientSocket, " ");
+            }
+
+            Console.ReadKey();
+            clientSocket.Close();
+        }            
+        
+        /// <summary>
+        /// 粘包
+        /// </summary>
+        static void Test21_SubPack_String() 
+        {
+
+            Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
+            Console.WriteLine("收到" + Common.Socket_Get(clientSocket)); //收
+            string s = "fhwduikfhjksfghuisdfhu的撒谎的十多个哈斯需不需ZHJ报电子版巴萨这个点哈斯必须总不能V型没ZB一可师傅好是127";
+            string str="";
+            for (int i = 0; i <100 ; i++)
+            {
+                str += s;
+            }
+            Common.Socket_Send(clientSocket, str);
 
 
+
+            Console.ReadKey();
+            clientSocket.Close();
+        }
+
+        static void Test21_StickPack()//Stick黏
+        {
+
+        }
 
 
         static void Test12_Async()
