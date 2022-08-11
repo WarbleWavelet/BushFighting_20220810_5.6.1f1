@@ -51,6 +51,20 @@ public class Common
             return System.Text.Encoding.UTF8.GetString(data, 0, count);
         }
 
+
+    /// <summary>
+    /// 大小统一
+    /// </summary>
+    /// <param name="cnt"></param>
+    /// <returns></returns>
+    public static byte[] String2Bin(int cnt=10000)
+    {
+        byte[] data = BitConverter.GetBytes(cnt);//字符串
+
+        return data;
+    }
+
+
     public static string Bin2StringAsync(Socket socket)
     {
         byte[] data = new byte[1024];
