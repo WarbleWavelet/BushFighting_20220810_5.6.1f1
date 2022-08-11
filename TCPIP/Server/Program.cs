@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using Protocol;
 
 namespace Server
 {
     class Program
     {
         static byte[] dataBuffer = new byte[102400];
+      
 
         static void Main(string[] args)
         {
@@ -18,14 +20,93 @@ namespace Server
 
            // Test01_Sync();
             //Test11_StartServerAsync();
-            Test12_StartServerAsync();
+           // Test12_StartServerAsync();
+            Test21_StartServerAsync();
 
             Console.ReadKey();
         }
 
 
-        #region 异步 2
-        static void Test12_StartServerAsync()
+
+        #region Msg统一数据长度
+        public static Msg msg = new Msg();
+    /// <summary>
+        /// 采用Msg
+        /// </summary>
+        static void Test21_StartServerAsync()
+        {
+            Socket serverSocket = Common.Socket_Server_New(Common.IP, Common.Port);
+
+            serverSocket.BeginAccept(Test21_AcceptCallBack, serverSocket); //开始监听
+
+
+        }
+
+        static void Test21_AcceptCallBack(IAsyncResult ar)
+        {
+            Socket serverSocket = ar.AsyncState as Socket;
+            Socket clientSocket = serverSocket.EndAccept(ar);
+
+            Common.Socket_Send("三弟务必守好徐州城", clientSocket);
+
+        
+            Socket_BeginReceive( msg, clientSocket, Test21_ReceiveCallBack);
+            serverSocket.BeginAccept(Test21_AcceptCallBack, serverSocket); //开始监听
+
+        }
+
+
+                                                
+        static void Test21_ReceiveCallBack(IAsyncResult ar)
+        {
+            Socket clientSocket = null;
+            try
+            {
+                clientSocket = ar.AsyncState as Socket;
+                int count = clientSocket.EndReceive(ar);
+                if (count <= 0)//正常关闭
+                {
+                    clientSocket.Close();
+                    return;
+                }
+                msg.AddCnt(count);
+
+                msg.Read();
+
+             Socket_BeginReceive(msg, clientSocket, Test21_ReceiveCallBack);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                if (clientSocket != null)//出现异常，关闭连接
+                {
+                    clientSocket.Close();
+                }
+            }
+            finally
+            {
+
+
+            }
+        }
+
+        /// <summary>
+        /// 容易敲
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="to"></param>
+        /// <param name="ar"></param>
+        static void Socket_BeginReceive(Msg msg, Socket to, System.AsyncCallback ar)
+        {
+            Socket clientSocket = to;//为了命名能复制
+            clientSocket.BeginReceive(msg.Data, msg.StartIndex, msg.RemainSize(), SocketFlags.None, ar, clientSocket);
+        }
+            #endregion
+
+
+            #region 异步 2
+            static void Test12_StartServerAsync()
         {
             Socket serverSocket = Common.Socket_Server_New(Common.IP, Common.Port);
 
@@ -60,7 +141,7 @@ namespace Server
                 int count = clientSocket.EndReceive(ar);
                 if (count <= 0)//正常关闭
                 { 
-                clientSocket.Close();
+                    clientSocket.Close();
                     return;
                 }
                 string msgStr = Encoding.UTF8.GetString(dataBuffer, 0, count);

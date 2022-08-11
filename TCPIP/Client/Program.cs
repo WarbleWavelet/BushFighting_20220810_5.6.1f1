@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Protocol;
 
 namespace Client
 {
@@ -17,7 +18,8 @@ namespace Client
             // Test11_Async();
             //Test12_Async();
             //Test21_SubPack_Int();
-           Test21_SubPack_String();
+           //Test21_SubPack_String();
+           Test21_SubPack_Msg();
         }
 
         /// <summary>
@@ -59,6 +61,32 @@ namespace Client
             Console.ReadKey();
             clientSocket.Close();
         }
+
+        /// <summary>
+        /// 粘包
+        /// </summary>
+        static void Test21_SubPack_Msg()
+        {
+
+            Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
+            Console.WriteLine("收到" + Common.Socket_Get(clientSocket)); //收
+
+            string s = "好兄弟，请求支援！";
+            string str = "";
+            for (int i = 0; i < 100; i++)
+            {
+                //str += s;
+                Common.Socket_SendWithLen(clientSocket, s);
+            }
+            //Common.Socket_SendWithLen(clientSocket, str); //这种超过msg.maxCnt
+
+
+         
+
+            Console.ReadKey();
+            clientSocket.Close();
+        }
+
 
         static void Test21_StickPack()//Stick黏
         {
