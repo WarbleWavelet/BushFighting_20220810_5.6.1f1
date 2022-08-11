@@ -13,11 +13,40 @@ namespace Client
         static void Main(string[] args)
         {
             Console.WriteLine("客户端：张飞");
-           // Test_Sync();
-            Test_Async();
+           // Test01_Sync();
+           // Test11_Async();
+            Test12_Async();
 
         }
-        static void Test_Async()
+
+
+
+
+
+        static void Test12_Async()
+        {
+            Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
+
+
+            Console.WriteLine("收到" + Common.Socket_Get(clientSocket)); //收
+
+            while (true)
+            {
+                string data = Console.ReadLine();
+                if (data == "c") //按c，客户端自行关闭
+                {
+                    clientSocket.Close();
+                    return;
+                }
+                Common.Socket_Send(clientSocket, data);
+            }
+
+
+            Console.ReadKey();
+            clientSocket.Close();
+        }
+
+        static void Test11_Async()
         {
             Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
 
@@ -37,7 +66,7 @@ namespace Client
         }
 
 
-        static void Test_Sync()
+        static void Test01_Sync()
         {
             Socket clientSocket = Common.Socket_Client_New(Common.IP, Common.Port);
 
