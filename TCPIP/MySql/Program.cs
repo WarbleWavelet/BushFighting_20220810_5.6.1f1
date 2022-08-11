@@ -14,12 +14,23 @@ namespace MySql
         {
             DBMgr.Instance.Init("bushfighting");
             DBMgr.Instance.QueryTable( "user",new string[] { "username","password"} );
-
+            DBMgr.Instance.InsertTable("user", "赵云", "12345678");
+            DBMgr.Instance.QueryTable("user", new string[] { "username", "password" });
 
             Console.ReadLine();
         }
 
 
+        /// <summary>
+        /// 备用
+        /// </summary>
+        static void Init()
+        {
+            DBMgr.Instance.InsertTable("user", "刘备", "12345");
+            DBMgr.Instance.InsertTable("user", "关羽", "123456");
+            DBMgr.Instance.InsertTable("user", "张飞", "1234567");
+            DBMgr.Instance.InsertTable("user", "赵云", "12345678");
+        }
     }
 
     class DBMgr
@@ -60,7 +71,36 @@ namespace MySql
         }
 
 
-        #region 查
+        #region 增删查改
+        public int InsertTable(string table,string username, string password)
+        {
+            int id = -1;
+            try
+            {
+                string sql = "insert into "+table+" set " +
+                "username=@username,password=@password";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+               
+                cmd.ExecuteNonQuery();
+                id = (int)cmd.LastInsertedId;
+                Console.WriteLine("已增id:" + id);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+
+            }
+            return id;
+        }
+
+
         public void QueryTable(string table,string[] colArr)
         {
 
