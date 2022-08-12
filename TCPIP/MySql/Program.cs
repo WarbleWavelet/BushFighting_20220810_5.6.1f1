@@ -13,11 +13,17 @@ namespace MySql
         static void Main(string[] args)
         {
             DBMgr.Instance.Init("bushfighting");
-            DBMgr.Instance.QueryTable( "user",new string[] { "username","password"} );
-            DBMgr.Instance.InsertTable("user", "赵云", "12345678");
-            DBMgr.Instance.QueryTable("user", new string[] { "username", "password" });
+            // DBMgr.Instance.QueryTable( "user",new string[] { "username","password"} );
+            //DBMgr.Instance.InsertTable("user", "赵云", "12345678");
+          
+           // Init();
+            // DBMgr.Instance.InsertTable_Injection("user", "马超", "12345678';delete from user;"); //sql注入
+            
+            DBMgr.Instance.DeleteRow("user", 21);
 
-            Console.ReadLine();
+           //DBMgr.Instance.QueryTable("user", new string[] { "username", "password" });
+
+           Console.ReadLine();
         }
 
 
@@ -77,8 +83,9 @@ namespace MySql
             int id = -1;
             try
             {
-                string sql = "insert into "+table+" set " +
+                string sql = "insert into " + table + " set " +
                 "username=@username,password=@password";
+
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("username", username);
@@ -100,6 +107,47 @@ namespace MySql
             return id;
         }
 
+
+        #region 说明 演示sql注入 
+     /// <summary>
+        /// 演示sql注入
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int InsertTable_Injection(string table,string username, string password)
+        {
+            int id = -1;
+            try
+            {
+                //string sql = "insert into "+table+" set " +
+                //"username=@username,password=@password";
+                string sql = "insert into "+table+" set " +
+                "username='"+username+"'"+" ,password='"+password;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+               
+                cmd.ExecuteNonQuery();
+                id = (int)cmd.LastInsertedId;
+                Console.WriteLine("已增id:" + id);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+
+            }
+            return id;
+        }
+       
+        #endregion
+   
 
         public void QueryTable(string table,string[] colArr)
         {
@@ -127,6 +175,36 @@ namespace MySql
             catch (Exception e)
             {
 
+            }
+            finally
+            {
+                //写在这里而不是try，防止catch的内容太多
+
+            }
+
+
+        }
+
+
+        public void DeleteRow(string table,int Id)
+        {
+
+            MySqlDataReader reader = null;
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("delete from " + table + " where Id=@Id", conn);
+
+
+
+                cmd.Parameters.AddWithValue("Id", Id);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("已删Id:" + Id);
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
             }
             finally
             {
