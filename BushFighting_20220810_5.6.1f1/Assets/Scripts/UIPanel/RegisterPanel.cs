@@ -1,17 +1,29 @@
-﻿using System.Collections;
+﻿/****************************************************
+    文件：StartPanel.cs
+	作者：
+    邮箱: 
+    日期：2022年8月12日
+	功能：
+*****************************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Protocol;
-public class RegisterPanel : BasePanel {
+public class RegisterPanel : BasePanel //注册 
+{
 
     private InputField usernameIF;
     private InputField passwordIF;
     private InputField rePasswordIF;
     private RegisterRequest registerRequest;
 
-    private void Start()
+
+
+    #region 生命
+   private void Start()
     {
         registerRequest = GetComponent<RegisterRequest>();
 
@@ -33,10 +45,22 @@ public class RegisterPanel : BasePanel {
         transform.DOLocalMove(Vector3.zero, 0.2f);
     }
 
-    private void OnRegisterClick()
+  
+    public override void OnExit()
+    {
+        base.OnExit();
+        gameObject.SetActive(false);
+    }
+    #endregion  
+ 
+
+
+    #region Click
+  private void OnRegisterClick()
     {
         PlayClickSound();
         string msg = "";
+
         if (string.IsNullOrEmpty(usernameIF.text))
         {
             msg += "用户名不能为空";
@@ -51,11 +75,26 @@ public class RegisterPanel : BasePanel {
         }
         if (msg != "")
         {
-            uiMgr.ShowMgr(msg);return;
+            uiMgr.ShowMgr(msg);
+            return;
         }
-        //进行注册 发送到服务器端
-        registerRequest.SendRequest(usernameIF.text, passwordIF.text);
+        
+        registerRequest.SendRequest(usernameIF.text, passwordIF.text); //进行注册 发送到服务器端
     }
+
+    private void OnCloseClick()
+    {
+        PlayClickSound();
+        transform.DOScale(0, 0.4f);
+        Tweener tweener = transform.DOLocalMove(new Vector3(1000, 0, 0), 0.4f);
+        tweener.OnComplete(() => uiMgr.PopPanel());
+    }
+
+
+
+
+    #endregion
+    
     public void OnRegisterResponse(ReturnCode returnCode)
     {
         if (returnCode == ReturnCode.Success)
@@ -66,17 +105,5 @@ public class RegisterPanel : BasePanel {
         {
             uiMgr.ShowMsgSync("用户名重复");
         }
-    }
-    private void OnCloseClick()
-    {
-        PlayClickSound();
-        transform.DOScale(0, 0.4f);
-        Tweener tweener = transform.DOLocalMove(new Vector3(1000, 0, 0), 0.4f);
-        tweener.OnComplete(() => uiMgr.PopPanel());
-    }
-    public override void OnExit()
-    {
-        base.OnExit();
-        gameObject.SetActive(false);
     }
 }

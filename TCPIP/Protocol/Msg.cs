@@ -141,6 +141,10 @@ namespace Protocol
         }
     }
 
+
+    /// <summary>
+    ///  对象
+    /// </summary>
     public enum ReqCode
     {
         None,
@@ -149,6 +153,9 @@ namespace Protocol
         Game
     }
 
+    /// <summary>
+    /// 动作
+    /// </summary>
     public enum ActionCode
     {
         None,

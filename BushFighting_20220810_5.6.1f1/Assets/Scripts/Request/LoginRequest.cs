@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
 
-public class LoginRequest : BaseRequest {
+public class LoginRequest : BaseRequest 
+{
     private LoginPanel loginPanel;
-    // Use this for initialization
     public override void Awake()
     {
         reqCode = ReqCode.User;
@@ -26,6 +26,7 @@ public class LoginRequest : BaseRequest {
         loginPanel.OnLoginResponse(returnCode);
         if (returnCode == ReturnCode.Success)
         {
+
             string username = strs[1];
             int totalCount = int.Parse(strs[2]);
             int winCount = int.Parse(strs[3]);

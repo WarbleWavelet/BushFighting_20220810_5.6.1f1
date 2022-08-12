@@ -22,7 +22,8 @@ public class BaseRequest : MonoBehaviour
     }
 
 
-	public virtual void Awake () {
+	public virtual void Awake () 
+    {
         facade.AddRequest(actionCode, this);
     }
     public virtual void OnDestroy()
@@ -33,6 +34,7 @@ public class BaseRequest : MonoBehaviour
 
 
     public virtual void SendRequest() { }
+
     protected void SendRequest(string data)
     {
         facade.SendRequest(reqCode, actionCode, data);

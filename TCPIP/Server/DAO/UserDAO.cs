@@ -5,12 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using GameServer.Model;
+using GameServer.Tool;
+
+
 namespace GameServer.DAO
 {
     class UserDAO
     {
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public User VerifyUser(MySqlConnection conn, string username,string password)
         {
+              
+
             MySqlDataReader reader = null;
             try
             {
@@ -28,7 +41,8 @@ namespace GameServer.DAO
                 {
                     return null;
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("在VerifyUser的时候出现异常："+e);
             }
@@ -67,6 +81,13 @@ namespace GameServer.DAO
             return false;
         }
 
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         public void AddUser(MySqlConnection conn, string username, string password)
         {
             try

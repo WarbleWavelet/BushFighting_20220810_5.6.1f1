@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Test_MySql
 {
-    public class User
+    public class UserTest
+
     {
         public string username;
         public string password;
@@ -26,7 +28,7 @@ namespace Test_MySql
             // DBMgr.Instance.InsertTable_Injection("user", "马超", "12345678';delete from user;"); //sql注入
 
             // DBMgr.Instance.DeleteRow("user", 21);
-            DBMgr.Instance.UpdateUser(new User { id = 23, username = "张飞", password = "1234" });
+            DBMgr.Instance.UpdateUser(new UserTest { id = 23, username = "张飞", password = "1234" });
 
             //DBMgr.Instance.QueryTable("user", new string[] { "username", "password" });
 
@@ -46,7 +48,7 @@ namespace Test_MySql
         }
     }
 
-    class DBMgr
+     public  class DBMgr
     {
         #region 单例
         private static DBMgr _instance;
@@ -225,7 +227,7 @@ namespace Test_MySql
 
 
 
-        public bool UpdateUser(User user)
+        public bool UpdateUser(UserTest user)
         {
             try
             {

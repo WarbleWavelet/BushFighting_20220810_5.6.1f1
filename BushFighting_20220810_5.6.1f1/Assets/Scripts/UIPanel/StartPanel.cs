@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿/****************************************************
+    文件：StartPanel.cs
+	作者：
+    邮箱: 
+    日期：2022年8月12日
+	功能： 游戏最开始
+*****************************************************/
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-public class StartPanel : BasePanel {
-
+public class StartPanel : BasePanel 
+{
     private Button loginButton;
     private Animator btnAnimator;
     public override void OnEnter()
@@ -20,6 +29,8 @@ public class StartPanel : BasePanel {
         PlayClickSound();
         uiMgr.PushPanel(UIPanelType.Login);
     }
+
+
     public override void OnPause()
     {
         base.OnPause();
@@ -28,6 +39,8 @@ public class StartPanel : BasePanel {
              SetActive(loginButton, false)
         );
     }
+
+
     public override void OnResume()
     {
         base.OnResume();

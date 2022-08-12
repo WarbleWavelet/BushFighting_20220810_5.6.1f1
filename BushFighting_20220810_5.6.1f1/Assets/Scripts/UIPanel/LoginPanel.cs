@@ -1,10 +1,21 @@
-﻿using System.Collections;
+﻿/****************************************************
+    文件：StartPanel.cs
+	作者：
+    邮箱: 
+    日期：2022年8月12日
+	功能：登录
+*****************************************************/
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using Protocol;
-public class LoginPanel : BasePanel {
+using Protocol;            
+
+public class LoginPanel : BasePanel 
+{
 
     private Button closeButton;
     private InputField usernameIF;
@@ -12,7 +23,10 @@ public class LoginPanel : BasePanel {
     private LoginRequest loginRequest;
     //private Button loginButton;
     //private Button registerButton;
-    private void Start()
+
+
+    #region 生命
+  private void Start()
     {
         loginRequest = GetComponent<LoginRequest>();
         usernameIF = transform.Find("UsernameLabel/UsernameInput").GetComponent<InputField>();
@@ -22,6 +36,11 @@ public class LoginPanel : BasePanel {
         transform.Find("LoginButton").GetComponent<Button>().onClick.AddListener(OnLoginClick);
         transform.Find("RegisterButton").GetComponent<Button>().onClick.AddListener(OnRegisterClick);
     }
+
+
+      
+
+
     public override void OnEnter()
     {
         base.OnEnter();
@@ -32,6 +51,8 @@ public class LoginPanel : BasePanel {
     {
         HideAnimation();
     }
+
+
     public override void OnResume()
     {
         EnterAnimation();
@@ -41,11 +62,26 @@ public class LoginPanel : BasePanel {
     {
         HideAnimation();
     }
+    #endregion
+  
+
+
+
+
+    #region Click
+    /// <summary>
+    /// 关闭注册窗口
+    /// </summary>
     private void OnCloseClick()
     {
         PlayClickSound();
         uiMgr.PopPanel();
     }
+
+
+ /// <summary>
+    /// 登录
+    /// </summary>
     private void OnLoginClick()
     {
         PlayClickSound();
@@ -66,17 +102,10 @@ public class LoginPanel : BasePanel {
         loginRequest.SendRequest(usernameIF.text, passwordIF.text);
     }
 
-    public void OnLoginResponse(ReturnCode returnCode)
-    {
-        if (returnCode == ReturnCode.Success)
-        {
-            uiMgr.PushPanelSync(UIPanelType.RoomList);
-        }
-        else
-        {
-            uiMgr.ShowMsgSync("用户名或密码错误，无法登录，请重新输入!!");
-        }
-    }
+
+    /// <summary>
+    /// 点击注册
+    /// </summary>
     private void OnRegisterClick()
     {
         PlayClickSound();
@@ -84,6 +113,29 @@ public class LoginPanel : BasePanel {
     }
 
 
+    #endregion
+   
+
+    public void OnLoginResponse(ReturnCode returnCode)
+    {
+        if (returnCode == ReturnCode.Success)
+        {
+            uiMgr.ShowMsgSync("登陆成功！");
+
+            uiMgr.PushPanelSync(UIPanelType.RoomList);
+        }
+        else
+        {
+            uiMgr.ShowMsgSync("用户名或密码错误，无法登录，请重新输入!!");
+        }
+    }
+
+
+
+    #region Animation
+    /// <summary>
+    /// 开窗动画
+    /// </summary>
     private void EnterAnimation()
     {
         gameObject.SetActive(true);
@@ -92,9 +144,16 @@ public class LoginPanel : BasePanel {
         transform.localPosition = new Vector3(1000, 0, 0);
         transform.DOLocalMove(Vector3.zero, 0.2f);
     }
+
+    /// <summary>
+    /// 关窗动画
+    /// </summary>
     private void HideAnimation()
     {
         transform.DOScale(0, 0.3f);
         transform.DOLocalMoveX(1000, 0.3f).OnComplete(() => gameObject.SetActive(false));
     }
+    #endregion
+
+
 }

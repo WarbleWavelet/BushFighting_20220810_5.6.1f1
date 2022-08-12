@@ -2,7 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BasePanel : MonoBehaviour {
+public class BasePanel : MonoBehaviour 
+{
+    //public interface  BindUI {  }
+
+    #region 字属
     protected UIMgr uiMgr;
     protected GameFacade facade;
 
@@ -15,12 +19,17 @@ public class BasePanel : MonoBehaviour {
     {
         set { facade = value; }
     }
+    #endregion
+
 
     protected void PlayClickSound()
     {
         facade.PlayNormalSound(AudioMgr.Sound_ButtonClick);
     }
 
+
+
+    #region 生命
     /// <summary>
     /// 界面被显示出来
     /// </summary>
@@ -52,8 +61,13 @@ public class BasePanel : MonoBehaviour {
     {
 
     }
+    #endregion
 
-    public virtual void SetActive(GameObject obj, bool state = true)
+
+
+
+    #region SetActive
+    public virtual void SetActive(GameObject obj, bool state = true) //obj万物源于UnityEngine.Object
     {
         obj.SetActive(state);
     }
@@ -69,4 +83,6 @@ public class BasePanel : MonoBehaviour {
     {
         obj.gameObject.SetActive(state);
     }
+    #endregion
+
 }

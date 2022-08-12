@@ -18,6 +18,14 @@ namespace GameServer.Controller
         {
             requestCode = ReqCode.User;
         }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="client"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         public string Login(string data, Client client, Server server)
         {
             string[] strs = data.Split(',');
@@ -34,12 +42,21 @@ namespace GameServer.Controller
                 return  string.Format("{0},{1},{2},{3}", ((int)ReturnCode.Success).ToString(), user.Username, res.TotalCount, res.WinCount);
             }
         }
+
+
+       /// <summary>
+       /// 注册
+       /// </summary>
+       /// <param name="data"></param>
+       /// <param name="client"></param>
+       /// <param name="server"></param>
+       /// <returns></returns>
         public string Register(string data, Client client, Server server)
         {
             string[] strs = data.Split(',');
             string username = strs[0];string password = strs[1];
             bool res = userDAO.GetUserByUsername(client.MySQLConn,username);
-            if (res)
+            if (res)                                
             {
                 return ((int)ReturnCode.Fail).ToString();
             }

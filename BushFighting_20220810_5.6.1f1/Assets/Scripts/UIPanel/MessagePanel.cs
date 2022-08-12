@@ -34,7 +34,7 @@ public class MessagePanel :BasePanel {
     }
     public void ShowMsg(string msg)
     {
-        txtShow.CrossFadeAlpha(1, 0.2f, false);
+        txtShow.CrossFadeAlpha(1, 0.2f, false);//0.2f内变1
         txtShow.text = msg;
         txtShow.enabled = true;
         Invoke("Hide", showTime);

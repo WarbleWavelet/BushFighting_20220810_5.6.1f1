@@ -7,9 +7,13 @@ using MySql.Data.MySqlClient;
 
 namespace GameServer.Tool
 {
+    /// <summary>
+    /// 链接数据库，比较不变的部分
+    /// </summary>
     class ConnHelper
     {
-        public const string CONNECTIONSTRING = "datasource=127.0.0.1;port=3306;database=bushfighting;user=root;pwd=;";
+        public const string CONNECTIONSTRING_1 = "datasource=127.0.0.1;port=3306;database=bushfighting;user=root;pwd=;"; //这种拿不到conn
+        public const string CONNECTIONSTRING = "server=localhost;User Id=root;passwrod=;Database=bushfighting;Charset=utf8";
 
         public static MySqlConnection Connect()
         {
@@ -28,12 +32,16 @@ namespace GameServer.Tool
         }
         public static void CloseConnection(MySqlConnection conn)
         {
-            if(conn!=null)
-                conn.Close();
+            if (conn != null)
+            {
+                 conn.Close();
+            }
             else
             {
                 Console.WriteLine("MySqlConnection不能为空");
             }
         }
     }
+
+
 }

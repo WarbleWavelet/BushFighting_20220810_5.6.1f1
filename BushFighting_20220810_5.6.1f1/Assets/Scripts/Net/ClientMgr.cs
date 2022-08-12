@@ -27,10 +27,9 @@ public class ClientMgr :BaseManager {
     {
         base.OnInit();
 
-        clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         try
         {
-            clientSocket.Connect(IP, PORT);
+            clientSocket = Common.Socket_Client_New(IP,PORT);
             Start();
         }
         catch (Exception e)
@@ -38,6 +37,7 @@ public class ClientMgr :BaseManager {
             Debug.LogWarning("无法连接到服务器端，请检查您的网络！！" + e);
         }
     }
+
     private void Start()
     {
         clientSocket.BeginReceive(msg.Data,msg.StartIndex, msg.RemainSize, SocketFlags.None, ReceiveCallback, null);
@@ -56,8 +56,9 @@ public class ClientMgr :BaseManager {
         }
     }
     #endregion
-   
 
+
+    #region cb
     private void ReceiveCallback(IAsyncResult ar)
     {
         try
@@ -77,10 +78,13 @@ public class ClientMgr :BaseManager {
             Debug.Log(e);
         }
     }
-    private void OnProcessDataCallback(ActionCode actionCode,string data)
+    private void OnProcessDataCallback(ActionCode actionCode,string data)  
     {
         facade.HandleReponse(actionCode, data);
     }
+    #endregion  
+
+
 
 
     public void SendRequest(ReqCode reqCode, ActionCode actionCode, string data)

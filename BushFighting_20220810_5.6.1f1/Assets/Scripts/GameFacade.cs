@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
-public class GameFacade : MonoBehaviour {
+public class GameFacade : MonoBehaviour //¥Û¿–
+{
 
 
     #region ◊÷ Ù

@@ -40,10 +40,7 @@ namespace GameServer.Servers
                 int count = BitConverter.ToInt32(data, 0);
                 if ((startIndex - 4) >= count)
                 {
-                    //Console.WriteLine(startIndex);
-                    //Console.WriteLine(count);
-                    //string s = Encoding.UTF8.GetString(data, 4, count);
-                    //Console.WriteLine("解析出来一条数据：" + s);
+
                     ReqCode requestCode = (ReqCode)BitConverter.ToInt32(data, 4);
                     ActionCode actionCode = (ActionCode)BitConverter.ToInt32(data, 8);
                     string s = Encoding.UTF8.GetString(data, 12, count-8);

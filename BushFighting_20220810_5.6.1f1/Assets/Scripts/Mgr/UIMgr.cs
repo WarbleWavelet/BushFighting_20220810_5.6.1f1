@@ -70,13 +70,18 @@ public class UIMgr: BaseManager
     {
         panelTypeToPush = panelType;
     }
+
+
     /// <summary>
     /// 把某个页面入栈，  把某个页面显示在界面上
     /// </summary>
     public BasePanel PushPanel(UIPanelType panelType)
     {
         if (panelStack == null)
-            panelStack = new Stack<BasePanel>();
+        { 
+             panelStack = new Stack<BasePanel>();
+        }
+           
 
         //判断一下栈里面是否有页面
         if (panelStack.Count > 0)
@@ -90,6 +95,9 @@ public class UIMgr: BaseManager
         panelStack.Push(panel);
         return panel;
     }
+
+
+
     /// <summary>
     /// 出栈 ，把页面从界面上移除
     /// </summary>
