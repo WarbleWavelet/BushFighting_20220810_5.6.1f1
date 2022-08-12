@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace MySql
 {
+    public class User
+    {
+        public string username;
+        public string password;
+        public int id;
+    }
     class Program
     {
         static void Main(string[] args)
@@ -19,7 +25,8 @@ namespace MySql
            // Init();
             // DBMgr.Instance.InsertTable_Injection("user", "马超", "12345678';delete from user;"); //sql注入
             
-            DBMgr.Instance.DeleteRow("user", 21);
+          // DBMgr.Instance.DeleteRow("user", 21);
+            DBMgr.Instance.UpdateUser(new User { id=23, username="张飞",password="1234" });
 
            //DBMgr.Instance.QueryTable("user", new string[] { "username", "password" });
 
@@ -186,20 +193,20 @@ namespace MySql
         }
 
 
-        public void DeleteRow(string table,int Id)
+        public void DeleteRow(string table,int id)
         {
 
             MySqlDataReader reader = null;
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("delete from " + table + " where Id=@Id", conn);
+                MySqlCommand cmd = new MySqlCommand("delete from " + table + " where id=@id", conn);
 
 
 
-                cmd.Parameters.AddWithValue("Id", Id);
+                cmd.Parameters.AddWithValue("id", id);
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("已删Id:" + Id);
+                Console.WriteLine("已删id:" +id);
 
             }
             catch (Exception e)
@@ -214,8 +221,40 @@ namespace MySql
 
 
         }
-        #endregion  
-        
+
+
+
+
+        public bool UpdateUser( User user)
+        {
+            try
+            {
+                string sql = "update user set " +
+                    " username = @username,password = @password" +
+                    " where Id=@Id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("username", user.username);
+                cmd.Parameters.AddWithValue("password",user.password);
+                cmd.Parameters.AddWithValue("id", user.id);
+
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("更新id成功：" + user.id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("查找id错误：" + user.id);
+                return false;
+            }
+            finally
+            {
+
+            }
+            return true;
+        }
+
+        #endregion
+
 
 
         /**  以前用过的代码，先放在这，方便复制粘贴
