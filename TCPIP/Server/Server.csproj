@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B6CB3FA-56AA-4A02-8916-65BD8666C4AF}</ProjectGuid>
+    <ProjectGuid>{301F9C4C-84A7-4CB3-B153-8FE798C12815}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Server</RootNamespace>
     <AssemblyName>Server</AssemblyName>
@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\Libraries\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,8 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\ControllerManager.cs" />
+    <Compile Include="Controller\DefaultController.cs" />
+    <Compile Include="Controller\GameController.cs" />
+    <Compile Include="Controller\RoomController.cs" />
+    <Compile Include="Controller\UserController.cs" />
+    <Compile Include="DAO\ResultDAO.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="Model\Result.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\Client.cs" />
+    <Compile Include="Servers\Message.cs" />
+    <Compile Include="Servers\Room.cs" />
+    <Compile Include="Servers\Server.cs" />
+    <Compile Include="Tool\ConnHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
