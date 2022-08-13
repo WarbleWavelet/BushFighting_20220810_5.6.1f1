@@ -3,14 +3,14 @@
   <Class Name="GameFacade" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>oCQFgBggBCAAAAAAAhAEAASCAAAAIAAgQAAgMAEgBg0=</HashCode>
+      <HashCode>oCQFgBggBCAAAAAAAhAEAASCAAAEIAAgQAQhMAEgBg0=</HashCode>
       <FileName>Assets\Scripts\GameFacade.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AudioMgr" Collapsed="true">
     <Position X="1" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEgAAABABAAgICAAAAgUCBAAAAiAABEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAABABAAEACAAAAgUCBAAAAiAADEA=</HashCode>
       <FileName>Assets\Scripts\Mgr\AudioMgr.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -45,7 +45,7 @@
   <Class Name="UIMgr" Collapsed="true">
     <Position X="1" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAIQAAABAAEAAAACEAEAAgQAAQAAQAAqAAAAAAAQA=</HashCode>
+      <HashCode>AAQAIQAAABAAEAAAQCEAEAAgQBAQAAQAAqABgAAAAQA=</HashCode>
       <FileName>Assets\Scripts\Mgr\UIMgr.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -192,7 +192,7 @@
   <Class Name="LoginPanel" Collapsed="true">
     <Position X="3.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAhgACACAAAAgAAAAAQAAAAAAQAAAABIEAADAAAAA=</HashCode>
+      <HashCode>AAAAhgACACAAAAgAAAAAQAAAAAAQAAAABIEAIDAAAAA=</HashCode>
       <FileName>Assets\Scripts\UIPanel\LoginPanel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -206,7 +206,7 @@
   <Class Name="RegisterPanel" Collapsed="true">
     <Position X="3.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAhAAABCABBAAAAAAAAAAAAAAQAAAABIAAACAAAAA=</HashCode>
+      <HashCode>AAAAhAAABCABBAAAAAAAAAAAAAAQAAAABIAAECAAAAA=</HashCode>
       <FileName>Assets\Scripts\UIPanel\RegisterPanel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -238,5 +238,12 @@
       <FileName>Assets\Scripts\Net\ClientMgr.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Enum Name="UIPanelType" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAABAAIAAAAAgBAAAAAAAQIAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\UIFramework\UIPanel\UIPanelType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Microsoft YaHei UI" Size="9" />
 </ClassDiagram>

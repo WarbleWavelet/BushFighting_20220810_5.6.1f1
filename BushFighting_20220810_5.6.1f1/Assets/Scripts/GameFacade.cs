@@ -91,7 +91,9 @@ public class GameFacade : MonoBehaviour //大佬
     #endregion
 
 
-    private void InitManager()
+
+    #region Mgr 生命
+  private void InitManager()
     {
         uiMgr = new UIMgr(this);
         audioMgr = new AudioMgr(this);
@@ -126,6 +128,9 @@ public class GameFacade : MonoBehaviour //大佬
         requestMgr.OnDestroy();
         clientMgr.OnDestroy();
     }
+    #endregion
+
+   
 
 
     public void AddRequest(ActionCode actionCode, BaseRequest request)
@@ -154,7 +159,7 @@ public class GameFacade : MonoBehaviour //大佬
 
     public void PlayBgSound(string soundName)
     {
-        audioMgr.PlayBGMAudio(soundName);
+        audioMgr.PlayBGMusic(soundName);
     }
     public void PlayNormalSound(string soundName)
     {

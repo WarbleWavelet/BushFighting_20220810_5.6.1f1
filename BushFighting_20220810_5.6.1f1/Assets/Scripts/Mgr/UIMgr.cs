@@ -50,7 +50,7 @@ public class UIMgr: BaseManager
 
     public UIMgr(GameFacade facade) : base(facade)
     {
-        ParseUIPanelTypeJson();
+        Json2Dic_UIPanelType();
     }
     #endregion
 
@@ -66,7 +66,7 @@ public class UIMgr: BaseManager
 
     public override void Update()
     {
-        if (panelTypeToPush != UIPanelType.None)
+        if (panelTypeToPush != UIPanelType.None) //要进行Panel切换
         {
             PushPanel(panelTypeToPush);
             panelTypeToPush = UIPanelType.None;
@@ -172,17 +172,21 @@ public class UIMgr: BaseManager
     {
         public List<UIPanelInfo> infoList;
     }
-    private void ParseUIPanelTypeJson()
+
+
+    /// <summary>
+    /// 解析Json，
+    /// </summary>
+    private void Json2Dic_UIPanelType(string jsonPath = "UIPanelType")
     {
         panelPathDict = new Dictionary<UIPanelType, string>();
 
-        TextAsset ta = Resources.Load<TextAsset>("UIPanelType");
+        TextAsset ta = Resources.Load<TextAsset>(jsonPath);
 
         UIPanelTypeJson jsonObject = JsonUtility.FromJson<UIPanelTypeJson>(ta.text);
 
         foreach (UIPanelInfo info in jsonObject.infoList) 
         {
-            //Debug.Log(info.panelType);
             panelPathDict.Add(info.panelType, info.path);
         }
     }

@@ -159,9 +159,9 @@ namespace Protocol
     public enum ActionCode
     {
         None,
-        Login,
-        Register,
-        ListRoom,
+        Login,          //登录
+        Register,       //注册
+        ListRoom,       //房间列表
         CreateRoom,
         JoinRoom,
         UpdateRoom,

@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioMgr : BaseManager {
 
     public AudioMgr(GameFacade facade) : base(facade) { }
-    private const string Sound_Prefix =     DefinePath.Sound_Prefix;
+   private const string Sound_Prefix =      DefinePath.Sound_Prefix;
     public const string Sound_Alert =       DefinePath.Sound_Alert;
     public const string Sound_ArrowShoot =  DefinePath.Sound_ArrowShoot;
     public const string Sound_Bg_Fast =     DefinePath.Sound_Bg_Fast;
@@ -24,27 +24,41 @@ public class AudioMgr : BaseManager {
         bgAudioSource = audioSourceGO.AddComponent<AudioSource>();
         uiAudioSource = audioSourceGO.AddComponent<AudioSource>();
 
-        PlaySound(bgAudioSource, LoadSound(Sound_Bg_Moderate),0.5f, true);
+        PlayMusic(bgAudioSource, LoadAudio(Sound_Bg_Moderate),0.5f, true);
     }
 
-    public void PlayBGMAudio(string soundName)
+
+    private AudioClip LoadAudio(string soundsName)
     {
-        PlaySound(bgAudioSource, LoadSound(soundName), 0.5f, true);
+        return Resources.Load<AudioClip>(Sound_Prefix + soundsName);
     }
+
+
+    /// <summary>
+    /// BGM
+    /// </summary>
+    /// <param name="soundName"></param>
+
+    public void PlayBGMusic(string soundName)
+    {
+        PlayMusic(bgAudioSource, LoadAudio(soundName), 0.5f, true);
+    }
+
+    /// <summary>
+    /// UI“Ù–ß
+    /// </summary>
+    /// <param name="soundName"></param>
     public void PlayUIAudio(string soundName=Sound_ButtonClick)
     {
-        PlaySound(uiAudioSource, LoadSound(soundName), 1f);
+        PlayMusic(uiAudioSource, LoadAudio(soundName), 1f);
     }
 
-    private void PlaySound( AudioSource audioSource,AudioClip clip,float volume, bool loop=false)
+    private void PlayMusic( AudioSource audioSource,AudioClip clip,float volume, bool loop=false)
     {
         audioSource.clip = clip;
         audioSource.volume = volume;
         audioSource.loop = loop;
         audioSource.Play();
     }
-    private AudioClip LoadSound(string soundsName)
-    {
-        return Resources.Load<AudioClip>(Sound_Prefix + soundsName);
-    }
+
 }
