@@ -26,5 +26,6 @@ public class RegisterRequest : BaseRequest//注册
     {
         ReturnCode returnCode = (ReturnCode)int.Parse(data);
         registerPanel.OnRegisterResponse(returnCode);
+
     }
 }

@@ -38,10 +38,14 @@ public class UIMgr: BaseManager
             return canvasTransform;
         }
     }
+
+    
+
     private Dictionary<UIPanelType, string> panelPathDict;//存储所有面板Prefab的路径
     private Dictionary<UIPanelType, BasePanel> panelDict;//保存所有实例化面板的游戏物体身上的BasePanel组件
     private Stack<BasePanel> panelStack;
     private MessagePanel msgPanel;
+    private LoginPanel loginPanel;
     private UIPanelType panelTypeToPush = UIPanelType.None;
 
     public UIMgr(GameFacade facade) : base(facade)
@@ -57,6 +61,9 @@ public class UIMgr: BaseManager
         PushPanel(UIPanelType.Message);
         PushPanel(UIPanelType.Start);
     }
+
+
+
     public override void Update()
     {
         if (panelTypeToPush != UIPanelType.None)
@@ -66,7 +73,9 @@ public class UIMgr: BaseManager
         }
     }
 
-    public void PushPanelSync(UIPanelType panelType)
+
+    #region Panel
+  public void PushPanelSync(UIPanelType panelType)
     {
         panelTypeToPush = panelType;
     }
@@ -118,6 +127,8 @@ public class UIMgr: BaseManager
 
     }
 
+
+
     /// <summary>
     /// 根据面板类型 得到实例化的面板
     /// </summary>
@@ -153,6 +164,8 @@ public class UIMgr: BaseManager
         }
 
     }
+    #endregion
+  
 
     [Serializable]
     class UIPanelTypeJson
@@ -174,10 +187,33 @@ public class UIMgr: BaseManager
         }
     }
 
-    public void InjectMsgPanel(MessagePanel msgPanel)
+
+
+    #region MsgPanel
+  public void InjectMsgPanel(MessagePanel msgPanel)
     {
         this.msgPanel = msgPanel;
     }
+
+    public void InjectLoginPanel(LoginPanel loginPanel)
+    {
+        if (this.loginPanel == null)
+        { 
+              this.loginPanel = loginPanel;
+        }
+      
+    }
+
+    public void SetIFText(string username, string password)
+    {
+        if (loginPanel != null)
+        { 
+              loginPanel.SetIF(username, password);
+        }
+    
+    }
+
+
     public void ShowMgr(string msg)
     {
         if (msgPanel == null)
@@ -194,6 +230,8 @@ public class UIMgr: BaseManager
         }
         msgPanel.ShowMgrSync(msg);
     }
+    #endregion
+  
     /// <summary>
     /// just for test
     /// </summary>

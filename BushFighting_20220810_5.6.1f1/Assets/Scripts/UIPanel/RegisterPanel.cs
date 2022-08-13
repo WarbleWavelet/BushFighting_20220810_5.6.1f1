@@ -87,23 +87,33 @@ public class RegisterPanel : BasePanel //注册
         PlayClickSound();
         transform.DOScale(0, 0.4f);
         Tweener tweener = transform.DOLocalMove(new Vector3(1000, 0, 0), 0.4f);
-        tweener.OnComplete(() => uiMgr.PopPanel());
+        tweener.OnComplete(() =>
+        {
+            uiMgr.PopPanel();
+            uiMgr.SetIFText(usernameIF.text, passwordIF.text);//将信息填入登录页的输入框
+
+        });//设置Login);         
     }
 
 
 
-
     #endregion
-    
+
     public void OnRegisterResponse(ReturnCode returnCode)
-    {
+    {       
         if (returnCode == ReturnCode.Success)
         {
             uiMgr.ShowMsgSync("注册成功");
+           
         }
         else
         {
             uiMgr.ShowMsgSync("用户名重复");
         }
     }
+
+    public string GetIFText( )
+    {
+        return usernameIF.text + "," + passwordIF.text;
+    }   
 }

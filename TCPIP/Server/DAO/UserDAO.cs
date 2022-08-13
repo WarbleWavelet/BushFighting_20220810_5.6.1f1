@@ -53,6 +53,13 @@ namespace GameServer.DAO
             return null;
         }
 
+
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool GetUserByUsername(MySqlConnection conn, string username)
         {
             MySqlDataReader reader = null;

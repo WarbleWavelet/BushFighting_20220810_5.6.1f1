@@ -49,6 +49,6 @@ public class StartPanel : BasePanel
             .DOScale(1, 0.3f)
             .OnComplete(() =>
                 btnAnimator.enabled = true
-                );
+            );
     }
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
+using System;
+
 public class GameFacade : MonoBehaviour //大佬
 {
 
@@ -31,8 +33,28 @@ public class GameFacade : MonoBehaviour //大佬
     private ClientMgr clientMgr;
 
     private bool isEnterPlaying = false;
+
+    internal void SetIFText(string v)
+    {                  
+        string[] strArr=v.Split(',');
+        string username = strArr[0];
+        string password = strArr[1];
+
+
+       
+        uiMgr.SetIFText(username, password);
+    }
+
+    internal void OpenPanel(UIPanelType login)
+    {
+        uiMgr.PushPanel(UIPanelType.Login);
+    }
+
+    internal void ClosePanel(UIPanelType login)
+    {
+    }
     #endregion
-  
+
 
 
 
@@ -155,7 +177,10 @@ public class GameFacade : MonoBehaviour //大佬
     {
         return playerMgr.GetCurrentRoleGameObject();
     }
-    public void EnterPlayingSync()
+
+
+    #region 玩家
+  public void EnterPlayingSync()
     {
         isEnterPlaying = true;
     }
@@ -173,6 +198,8 @@ public class GameFacade : MonoBehaviour //大佬
     {
         playerMgr.SendAttack(damage);
     }
+    #endregion  
+  
     public void GameOver()
     {
         cameraMgr.WalkthroughScene();
@@ -182,4 +209,6 @@ public class GameFacade : MonoBehaviour //大佬
     {
         playerMgr.UpdateResult(totalCount, winCount);
     }
+
+
 }

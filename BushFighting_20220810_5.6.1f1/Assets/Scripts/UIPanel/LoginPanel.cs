@@ -44,6 +44,7 @@ public class LoginPanel : BasePanel
     public override void OnEnter()
     {
         base.OnEnter();
+        uiMgr.InjectLoginPanel(this);
         EnterAnimation();
     }
 
@@ -103,6 +104,7 @@ public class LoginPanel : BasePanel
     }
 
 
+
     /// <summary>
     /// 点击注册
     /// </summary>
@@ -114,6 +116,14 @@ public class LoginPanel : BasePanel
 
 
     #endregion
+    /// <summary>
+    /// 注册后自动设置用户名，密码
+    /// </summary>
+    public void SetIF(string username, string password)
+    {
+        usernameIF.text = username;
+        passwordIF.text = password;
+    }
    
 
     public void OnLoginResponse(ReturnCode returnCode)

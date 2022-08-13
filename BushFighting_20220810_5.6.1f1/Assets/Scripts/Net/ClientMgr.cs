@@ -6,6 +6,7 @@ using System;
 using Protocol;
 using System.Text;
 using System.Linq;
+using System.Net;
 
 /// <summary>
 /// 这个是用来管理跟服务器端的Socket连接
@@ -26,10 +27,10 @@ public class ClientMgr :BaseManager {
  public override void OnInit()
     {
         base.OnInit();
-
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         try
         {
-            clientSocket = Common.Socket_Client_New(IP,PORT);
+            clientSocket.Connect(new IPEndPoint(IPAddress.Parse(IP), PORT));
             Start();
         }
         catch (Exception e)
@@ -40,7 +41,8 @@ public class ClientMgr :BaseManager {
 
     private void Start()
     {
-        clientSocket.BeginReceive(msg.Data,msg.StartIndex, msg.RemainSize, SocketFlags.None, ReceiveCallback, null);
+        clientSocket.BeginReceive(msg.Data,msg.StartIndex, msg.RemainSize, 
+            SocketFlags.None, ReceiveCallback, null);
     }
 
     public override void OnDestroy()
@@ -58,7 +60,23 @@ public class ClientMgr :BaseManager {
     #endregion
 
 
-    #region cb
+    #region cb  
+    /// <summary>
+    /// 发
+    /// </summary>
+    /// <param name="reqCode"></param>
+    /// <param name="actionCode"></param>
+    /// <param name="data"></param>
+    public void SendRequest(ReqCode reqCode, ActionCode actionCode, string data)
+    {
+        byte[] bytes = Msg.PackData(reqCode, actionCode, data);
+        clientSocket.Send(bytes);
+    }
+
+    /// <summary>
+    /// 收
+    /// </summary>
+    /// <param name="ar"></param>
     private void ReceiveCallback(IAsyncResult ar)
     {
         try
@@ -78,6 +96,13 @@ public class ClientMgr :BaseManager {
             Debug.Log(e);
         }
     }
+
+
+    /// <summary>
+    /// 处理收
+    /// </summary>
+    /// <param name="actionCode"></param>
+    /// <param name="data"></param>
     private void OnProcessDataCallback(ActionCode actionCode,string data)  
     {
         facade.HandleReponse(actionCode, data);
@@ -87,11 +112,7 @@ public class ClientMgr :BaseManager {
 
 
 
-    public void SendRequest(ReqCode reqCode, ActionCode actionCode, string data)
-    {
-        byte[] bytes = Msg.PackData(reqCode, actionCode, data);
-        clientSocket.Send(bytes);
-    }
+
 
     private class MsgLocal
     {

@@ -55,8 +55,8 @@ namespace GameServer.Controller
         {
             string[] strs = data.Split(',');
             string username = strs[0];string password = strs[1];
-            bool res = userDAO.GetUserByUsername(client.MySQLConn,username);
-            if (res)                                
+            bool isExist = userDAO.GetUserByUsername(client.MySQLConn,username); //用户是否存在
+            if (isExist)                                
             {
                 return ((int)ReturnCode.Fail).ToString();
             }
