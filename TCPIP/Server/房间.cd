@@ -1,21 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="GameServer.Servers.Room" Collapsed="true">
-    <Position X="3.5" Y="2.25" Width="1.5" />
+    <Position X="3.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>KCAAAAAAAAAAAAAAAAQIAEAAIQAAAAAEBAACggKgAAI=</HashCode>
       <FileName>Servers\Room.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameServer.Controller.RoomController" Collapsed="true">
-    <Position X="3.25" Y="1" Width="1.5" />
+    <Position X="3.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAAAAACAEAA=</HashCode>
       <FileName>Controller\RoomController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="GameServer.Servers.RoomState" Collapsed="true">
+  <Class Name="GameServer.Servers.Client" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAGAAAACAAAAAABlAAABQQcACAAAACBBQAoACgAQI=</HashCode>
+      <FileName>Servers\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Model.User" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Servers.Server" Collapsed="true">
     <Position X="3.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIAACAAAABAAIAAAAIAACAAAAAQBAAAMAAAEAI=</HashCode>
+      <FileName>Servers\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GameServer.Servers.RoomState" Collapsed="true">
+    <Position X="3.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAACAAIgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Servers\Room.cs</FileName>

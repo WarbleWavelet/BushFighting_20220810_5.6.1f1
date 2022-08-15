@@ -19,7 +19,7 @@ namespace GameServer.Controller
         public string CreateRoom(string data, Client client, Server server)
         {
             server.CreateRoom(client);
-            return ((int)ReturnCode.Success).ToString()+","+ ((int)RoleType.Blue).ToString();
+            return ((int)ReturnCode.Success).ToString()+","+ ((int)RoleType.Home).ToString();
         }
 
         public string QuitRoom(string data, Client client, Server server)
@@ -71,16 +71,16 @@ namespace GameServer.Controller
             {
                 return ((int)ReturnCode.NotFound).ToString();
             }
-            else if (room.IsWaitingJoin() == false)
+            else if (room.IsWaitingJoin() == false)//非等待
             {
-                return ((int)ReturnCode.Fail).ToString();
+                return ((int)ReturnCode.Fail).ToString(); //满员了
             }
-            else
+            else//成功
             {
                 room.AddClient(client);
                 string roomData = room.GetRoomData();//"returncode,roletype-id,username,tc,wc|id,username,tc,wc"
                 room.BroadcastMessage(client, ActionCode.UpdateRoom, roomData);
-                return ((int)ReturnCode.Success).ToString() + "," + ((int)RoleType.Red).ToString()+ "-" + roomData;
+                return ((int)ReturnCode.Success).ToString() + "," + ((int)RoleType.Away).ToString()+ "-" + roomData;
             }
         }
         #endregion

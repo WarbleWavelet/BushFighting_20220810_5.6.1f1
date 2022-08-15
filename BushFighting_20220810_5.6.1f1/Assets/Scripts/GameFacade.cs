@@ -61,14 +61,6 @@ public class GameFacade : MonoBehaviour
     }
 
     #region 生命
-    //private void Awake()
-    //{
-    //    if (_instance != null)
-    //    {
-    //        Destroy(this.gameObject);return;
-    //    }
-    //    _instance = this;
-    //}
 
 
     void Start ()
@@ -160,7 +152,7 @@ public class GameFacade : MonoBehaviour
 
     public void ShowMessage(string msg)
     {
-        uiMgr.ShowMgr(msg);
+        uiMgr.ShowMsg(msg);
     }
 
 

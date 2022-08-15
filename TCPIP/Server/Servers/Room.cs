@@ -37,7 +37,7 @@ namespace GameServer.Servers
 
 
         /// <summary>
-        /// 等待
+        /// 等待人员
         /// </summary>
         /// <returns></returns>
         public bool IsWaitingJoin()
@@ -79,6 +79,11 @@ namespace GameServer.Servers
             return clientLst[0].GetUserData();
         }
         
+
+        /// <summary>
+        /// 房间Id 房主Id 
+        /// </summary>
+        /// <returns>-1 不存在</returns>
         public int GetId()
         {
             if (clientLst.Count > 0)
@@ -88,6 +93,12 @@ namespace GameServer.Servers
             return -1;
         }
 
+
+        /// <summary>
+        /// 客户端战绩<para />
+        /// "returncode,roletype-id,username,tc,wc|id,username,tc,wc"<para />
+        /// </summary>
+        /// <returns></returns>
         public String GetRoomData()
         {
             StringBuilder sb = new StringBuilder();
@@ -102,7 +113,12 @@ namespace GameServer.Servers
             return sb.ToString();
         }
 
-
+        /// <summary>
+        ///  广播消息给其他client
+        /// </summary>
+        /// <param name="excludeClient">排除掉的</param>
+        /// <param name="actionCode"></param>
+        /// <param name="data"></param>
         public void BroadcastMessage(Client excludeClient,ActionCode actionCode,string data)
         {
             foreach(Client client in clientLst)
@@ -121,20 +137,27 @@ namespace GameServer.Servers
         }
 
 
+        /// <summary>
+        /// 退出房间
+        /// </summary>
+        /// <param name="client"></param>
         public void QuitRoom(Client client)
         {
-            if (client == clientLst[0])
+            if (client == clientLst[0])//房主嘉会解散房间
             {
                 Close();
             }
             else
+            {
                 clientLst.Remove(client);
+            }
+               
         }
 
 
         public void Close()
         {
-            foreach(Client client in clientLst)
+            foreach(Client client in clientLst) //赶人
             {
                 client.Room = null;
             }

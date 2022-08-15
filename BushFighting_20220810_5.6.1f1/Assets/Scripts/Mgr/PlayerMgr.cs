@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
@@ -6,7 +6,7 @@ using Protocol;
 public class PlayerMgr : BaseManager
 {
 
-    #region ×ÖÊô¹¹Ôì
+    #region å­—å±žæž„é€ 
  public PlayerMgr(GameFacade facade) : base(facade) { }
 
     private UserData userData;
@@ -44,8 +44,8 @@ public class PlayerMgr : BaseManager
     }
     private void InitRoleDataDict()
     {
-        roleDataDict.Add(RoleType.Blue, new RoleData(RoleType.Blue, "Hunter_BLUE", "Arrow_BLUE", "Explosion_BLUE",rolePositions.Find("Position1")));
-        roleDataDict.Add(RoleType.Red, new RoleData(RoleType.Red, "Hunter_RED", "Arrow_RED", "Explosion_RED", rolePositions.Find("Position2")));
+        roleDataDict.Add(RoleType.Away, new RoleData(RoleType.Away, "Hunter_BLUE", "Arrow_BLUE", "Explosion_BLUE",rolePositions.Find("Position1")));
+        roleDataDict.Add(RoleType.Home, new RoleData(RoleType.Home, "Hunter_RED", "Arrow_RED", "Explosion_RED", rolePositions.Find("Position2")));
     }
     public void SpawnRoles()
     {

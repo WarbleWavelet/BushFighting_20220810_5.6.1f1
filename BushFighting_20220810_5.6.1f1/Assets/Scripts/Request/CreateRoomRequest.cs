@@ -23,6 +23,11 @@ public class CreateRoomRequest :BaseRequest
         base.Awake();
     }
 
+
+    /// <summary>
+    /// 大厅进房
+    /// </summary>
+    /// <param name="panel"></param>
     public void SetPanel( BasePanel panel)
     {
         roomPanel = panel as RoomPanel;

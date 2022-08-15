@@ -47,14 +47,14 @@ public class ListRoomRequest : BaseRequest
 
                 #region 另一种写法
                 /**  get set不能这样写
-UserData _userData = new UserData
-{
-    Id = int.Parse(strs[0]),
-    Username = strs[1],
-    TotalCount = int.Parse(strs[2]),
-    WinCount = int.Parse(strs[3])
-};
-//*/
+                UserData _userData = new UserData
+                {
+                    Id = int.Parse(strs[0]),
+                    Username = strs[1],
+                    TotalCount = int.Parse(strs[2]),
+                    WinCount = int.Parse(strs[3])
+                };
+                //*/
                 #endregion
 
                 int id = int.Parse(strs[0]);
@@ -65,6 +65,6 @@ UserData _userData = new UserData
             }
         }
         
-        roomListPanel.LoadRoomItemAsync(userLst);
+        roomListPanel.LoadLobbyAsync(userLst);
     }
 }

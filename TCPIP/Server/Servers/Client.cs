@@ -74,33 +74,14 @@ namespace GameServer.Servers
                   clientSocket.Close();
             }
               
-            if (room != null)
+            if (room != null) //有房退房
             {
                 room.QuitRoom(this);
             }
             server.RemoveClient(this);
         }
 
-        private void ReceiveCallback(IAsyncResult ar)
-        {
-            try
-            {
-                if (clientSocket == null || clientSocket.Connected == false) return;
-                int count = clientSocket.EndReceive(ar);
-                if (count == 0)
-                {
-                    Close();
-                }
-                msg.ReadMessage(count,OnProcessMessage);
-                Start();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Close();
-            }
-        }
-
+      
         #endregion
 
 
@@ -122,12 +103,32 @@ namespace GameServer.Servers
             {
                 byte[] bytes = Message.PackData(actionCode, data);
                 clientSocket.Send(bytes);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("无法发送消息:" + e);
             }
         }
 
+        private void ReceiveCallback(IAsyncResult ar)
+        {
+            try
+            {
+                if (clientSocket == null || clientSocket.Connected == false) return;
+                int count = clientSocket.EndReceive(ar);
+                if (count == 0)
+                {
+                    Close();
+                }
+                msg.ReadMessage(count, OnProcessMessage);
+                Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Close();
+            }
+        }
 
         #region Room
         public bool IsHouseOwner()
@@ -166,7 +167,7 @@ namespace GameServer.Servers
 
 
         #region 说明
-   #region 战斗
+        #region 战斗
         public bool TakeDamage(int damage)
         {
             HP -= damage;
@@ -189,12 +190,20 @@ namespace GameServer.Servers
             this.result = result;
         }
 
-
+        /// <summary>
+        ///  user.Id可做房间Id 
+        /// </summary>
+        /// <returns></returns>
         public string GetUserData()
         {
             return user.Id + "," + user.Username + "," + result.TotalCount + "," + result.WinCount;
         }
 
+
+        /// <summary>
+        /// 获取GetUserId
+        /// </summary>
+        /// <returns></returns>
         public int GetUserId()
         {
             return user.Id;

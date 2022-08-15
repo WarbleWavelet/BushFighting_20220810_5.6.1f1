@@ -97,7 +97,7 @@ public class LoginPanel : BasePanel
         }
         if (msg != "")
         {
-            uiMgr.ShowMgr(msg);
+            uiMgr.ShowMsg(msg);
             return;
         }
         loginRequest.SendRequest(usernameIF.text, passwordIF.text);

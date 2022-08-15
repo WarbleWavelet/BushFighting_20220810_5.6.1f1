@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -7,6 +7,8 @@ public class UIMgr: BaseManager
 {
 
     #region 单例 字属 构造
+
+    #region 单例
     /// 
     /// 单例模式的核心
     /// 1，定义一个静态的对象 在外界访问 在内部构造
@@ -26,7 +28,16 @@ public class UIMgr: BaseManager
     //    }
     //}
 
-    private Transform canvasTransform;
+ 
+
+    #endregion
+   private Transform canvasTransform;
+    private Dictionary<UIPanelType, string> panelPathDict;//存储所有面板Prefab的路径
+    private Dictionary<UIPanelType, BasePanel> panelDict;//保存所有实例化面板的游戏物体身上的BasePanel组件
+    private Stack<BasePanel> panelStack;
+    private MessagePanel msgPanel;
+    private LoginPanel loginPanel;
+    private UIPanelType panelTypeToPush = UIPanelType.None;
     private Transform CanvasTransform
     {
         get
@@ -39,14 +50,7 @@ public class UIMgr: BaseManager
         }
     }
 
-    
 
-    private Dictionary<UIPanelType, string> panelPathDict;//存储所有面板Prefab的路径
-    private Dictionary<UIPanelType, BasePanel> panelDict;//保存所有实例化面板的游戏物体身上的BasePanel组件
-    private Stack<BasePanel> panelStack;
-    private MessagePanel msgPanel;
-    private LoginPanel loginPanel;
-    private UIPanelType panelTypeToPush = UIPanelType.None;
 
     public UIMgr(GameFacade facade) : base(facade)
     {
@@ -218,7 +222,7 @@ public class UIMgr: BaseManager
     }
 
 
-    public void ShowMgr(string msg)
+    public void ShowMsg(string msg)
     {
         if (msgPanel == null)
         {

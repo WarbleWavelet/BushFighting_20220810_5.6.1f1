@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/8/15 15:33:29
+	功能：大厅，房间列表
+
+*****************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -7,6 +15,7 @@ using Protocol;
 public class RoomListPanel : BasePanel
 {
 
+  
     #region 字属构造
     private RectTransform battleRes;
     private RectTransform roomList;
@@ -15,6 +24,7 @@ public class RoomListPanel : BasePanel
     private ListRoomRequest listRoomRequest;
     private CreateRoomRequest createRoomRequest;
     private JoinRoomRequest joinRoomRequest;
+    private UpdateResultRequest updateResultRequest;
     private List<UserData> userdataLst = null;
 
     private UserData ud1 = null;
@@ -39,7 +49,7 @@ public class RoomListPanel : BasePanel
         listRoomRequest = GetOrAddComponent<ListRoomRequest>(gameObject);
         createRoomRequest = GetOrAddComponent<CreateRoomRequest>(gameObject);
         joinRoomRequest = GetOrAddComponent<JoinRoomRequest>(gameObject);
-        GetOrAddComponent<UpdateResultRequest>(gameObject);
+        updateResultRequest = GetOrAddComponent<UpdateResultRequest>(gameObject);
         //
         EnterAnim();
     }
@@ -52,7 +62,7 @@ public class RoomListPanel : BasePanel
             userdataLst = null;
         }
 
-        if (ud1 != null && ud2 != null)
+        if (ud1 != null && ud2 != null)//满员，准备战斗
         {
             BasePanel panel = uiMgr.PushPanel(UIPanelType.Room);
             (panel as RoomPanel).SetAllPlayerResAsync(ud1, ud2);
@@ -120,6 +130,10 @@ public class RoomListPanel : BasePanel
         createRoomRequest.SetPanel(panel);
         createRoomRequest.SendRequest();
     }
+
+    /// <summary>
+    /// 刷新
+    /// </summary>
     private void OnRefreshClick()
     {
         listRoomRequest.SendRequest();
@@ -175,7 +189,7 @@ public class RoomListPanel : BasePanel
      /// 接受quest
      /// </summary>
      /// <param name="udList"></param>
-    public void LoadRoomItemAsync(List<UserData> udList)
+    public void LoadLobbyAsync(List<UserData> udList) //Update中会更新
     {
         this.userdataLst = udList;
     }
@@ -195,12 +209,16 @@ public class RoomListPanel : BasePanel
         int count = udList.Count;
         for (int i = 0; i < count; i++)
         {
-            SetRoomItem(udList[i]);
+            ShowRoomItem(udList[i]);
         }
         AdaptRoomListLength();
     }
 
-    void SetRoomItem(UserData ud)
+    /// <summary>
+    /// 显示大厅中的房间项
+    /// </summary>
+    /// <param name="ud"></param>
+    void ShowRoomItem(UserData ud)
     {
         GameObject roomItem = GameObject.Instantiate(roomItemPrefab);
         roomItem.transform.SetParent(roomLayout.transform);
@@ -223,6 +241,13 @@ public class RoomListPanel : BasePanel
         SetBattleRes();
     }
 
+
+    /// <summary>
+    /// 点击进入房间的回调 
+    /// </summary>
+    /// <param name="returnCode"></param>
+    /// <param name="ud1"></param>
+    /// <param name="ud2"></param>
     public void OnJoinResponse( ReturnCode returnCode,UserData ud1,UserData ud2)
     {
         switch (returnCode)
@@ -234,6 +259,7 @@ public class RoomListPanel : BasePanel
                 uiMgr.ShowMsgSync("房间已满，无法加入");
                 break;
             case ReturnCode.Success:
+                uiMgr.ShowMsgSync("加入房间");
                 this.ud1 = ud1;
                 this.ud2 = ud2;
                 break;

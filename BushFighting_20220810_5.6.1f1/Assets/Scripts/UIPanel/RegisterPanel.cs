@@ -75,7 +75,7 @@ public class RegisterPanel : BasePanel //注册
         }
         if (msg != "")
         {
-            uiMgr.ShowMgr(msg);
+            uiMgr.ShowMsg(msg);
             return;
         }
         

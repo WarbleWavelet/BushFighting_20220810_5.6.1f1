@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,14 @@ using System.Text;
 
 public class UserData
 {
-    public UserData(string userData)
+
+    #region 字属 构造
+    public int Id { get; private set; }
+    public string Username { get; private set; }
+    public int TotalCount { get; set; }
+    public int WinCount { get; set; }
+
+  public UserData(string userData)
     {
         string[] strs = userData.Split(',');
         this.Id = int.Parse(strs[0]);
@@ -20,6 +27,13 @@ public class UserData
         this.TotalCount = totalCount;
         this.WinCount = winCount;
     }
+    /// <summary>
+    /// 创建房间多用
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="username"></param>
+    /// <param name="totalCount"></param>
+    /// <param name="winCount"></param>
     public UserData(int id,string username, int totalCount, int winCount)
     {
         this.Id = id;
@@ -27,8 +41,7 @@ public class UserData
         this.TotalCount = totalCount;
         this.WinCount = winCount;
     }
-    public int Id { get;private set; }
-    public string Username { get;private set; }
-    public int TotalCount { get;  set; }
-    public int WinCount { get;  set; }
+    #endregion
+  
+
 }

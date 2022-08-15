@@ -88,7 +88,11 @@ namespace GameServer.Servers
             room.AddClient(client);
             roomList.Add(room);
         }
-
+        
+        /// <summary>
+        /// 移除房间
+        /// </summary>
+        /// <param name="room"></param>
         public void RemoveRoom(Room room)
         {
             if (roomList != null && room != null)
@@ -102,12 +106,19 @@ namespace GameServer.Servers
             return roomList;
         }
 
-
+      /// <summary>
+       /// 得到该Id的Room
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public Room GetRoomById(int id)
         {
             foreach(Room room in roomList)
             {
-                if (room.GetId() == id) return room;
+                if (room.GetId() == id)
+                {
+                    return room;
+                }
             }
             return null;
         }

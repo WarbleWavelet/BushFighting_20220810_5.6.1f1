@@ -143,7 +143,7 @@ namespace Protocol
 
 
     /// <summary>
-    ///  对象
+    ///  请求对象码
     /// </summary>
     public enum ReqCode
     {
@@ -154,18 +154,20 @@ namespace Protocol
     }
 
     /// <summary>
-    /// 动作
+    /// 请求动作码
     /// </summary>
     public enum ActionCode
     {
         None,
         Login,          //登录
         Register,       //注册
+
         ListRoom,       //房间列表
         CreateRoom,
         JoinRoom,
-        UpdateRoom,
+        UpdateRoom,     //有玩家进出
         QuitRoom,
+
         StartGame,
         ShowTimer,
         StartPlay,
@@ -177,11 +179,13 @@ namespace Protocol
         QuitBattle
     }
 
-
+    /// <summary>
+    /// 阵营
+    /// </summary>
     public enum RoleType
     {
-        Blue,
-        Red
+        Home,//主
+        Away     //客
     }
 
 
@@ -189,6 +193,6 @@ namespace Protocol
     {
         Success,
         Fail,
-        NotFound
+        NotFound //没找到
     }
 }

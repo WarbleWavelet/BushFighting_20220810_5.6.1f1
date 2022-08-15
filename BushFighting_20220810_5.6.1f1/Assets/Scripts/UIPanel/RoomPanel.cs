@@ -8,6 +8,7 @@ using Protocol;
 public class RoomPanel : BasePanel
 {
 
+    #region 字属
     private Text localPlayerUsername;
     private Text localPlayerTotalCount;
     private Text localPlayerWinCount;
@@ -22,13 +23,15 @@ public class RoomPanel : BasePanel
     private Transform exitButton;
 
     private UserData ud = null;
-    private UserData ud1 = null;
-    private UserData ud2 = null;
+    private UserData udHome = null;
+    private UserData udAway = null;
 
     private QuitRoomRequest quitRoomRequest;
     private StartGameRequest startGameRequest;
 
     private bool isPopPanel = false;
+    #endregion  
+   
 
     #region 生命
     private void Start()
@@ -55,6 +58,38 @@ public class RoomPanel : BasePanel
         startGameRequest = GetOrAddComponent<StartGameRequest>(gameObject);
 
         EnterAnim();
+    }    
+    
+    
+    private void Update()
+    {
+        if (ud != null)//设置玩家信息
+        {
+            SetRoleRes(RoleType.Home, ud);
+            ClearAwayPlayerRes();
+            ud = null;
+        }
+        if (udHome != null) //房主
+        {
+            SetRoleRes(RoleType.Home, udHome);
+            if (udAway != null)
+            {
+                SetRoleRes(RoleType.Away, udAway);
+            }
+
+            else
+            {
+                ClearAwayPlayerRes();
+            }
+
+            udHome = null;
+            udAway = null;
+        }
+        if (isPopPanel)
+        {                                                                        
+            uiMgr.PopPanel();
+            isPopPanel = false;
+        }
     }
     public override void OnEnter()
     {
@@ -82,36 +117,7 @@ public class RoomPanel : BasePanel
     #endregion  
   
 
-    private void Update()
-    {
-        if (ud != null)//设置玩家信息
-        {
-            SetLocalPlayerRes(ud.Username, ud.TotalCount.ToString(), ud.WinCount.ToString());
-            ClearEnemyPlayerRes();
-            ud = null;
-        }
-        if (ud1 != null)
-        {
-            SetLocalPlayerRes(ud1.Username, ud1.TotalCount.ToString(), ud1.WinCount.ToString());
-            if (ud2 != null)
-            {
-                SetEnemyPlayerRes(ud2.Username, ud2.TotalCount.ToString(), ud2.WinCount.ToString());
-            }
-
-            else
-            {
-                ClearEnemyPlayerRes();
-            }
-
-            ud1 = null;
-            ud2 = null;
-        }
-        if (isPopPanel)
-        {                                                                        
-            uiMgr.PopPanel();
-            isPopPanel = false;
-        }
-    }
+  
 
 
 
@@ -123,29 +129,72 @@ public class RoomPanel : BasePanel
 
     public void SetAllPlayerResAsync(UserData ud1,UserData ud2)
     {
-        this.ud1 = ud1;
-        this.ud2 = ud2;
+        this.udHome = ud1;
+        this.udAway = ud2;
     }
-    #endregion  
+    #endregion
 
-    public void SetLocalPlayerRes(string username, string totalCount, string winCount)
-    {
-        localPlayerUsername.text = username;
-        localPlayerTotalCount.text = "总场数：" + totalCount;
-        localPlayerWinCount.text = "胜利：" + winCount;
+
+    #region SetRoleRes
+     /// <summary>
+    /// 根据RoleType去设置对应RoleType的UI
+    /// </summary>
+    /// <param name="roleType"></param>
+    /// <param name="username"></param>
+    /// <param name="totalCount"></param>
+    /// <param name="winCount"></param>
+    public void SetRoleRes(RoleType roleType, UserData ud)
+    { 
+        switch (roleType)
+        {
+            case RoleType.Home:
+                {
+                    SetHomePlayerRes( ud);
+                }
+                break;            
+            case RoleType.Away:
+                {
+                    SetAwayPlayerRes( ud);
+                }
+                break;
+            default: break;
+        }
     }
-    private void SetEnemyPlayerRes(string username, string totalCount, string winCount)
+
+    /// <summary>
+    /// 主场角色
+    /// </summary>
+    /// <param name="ud"></param>
+    void SetHomePlayerRes( UserData ud)
     {
-        enemyPlayerUsername.text = username;
-        enemyPlayerTotalCount.text = "总场数：" + totalCount;
-        enemyPlayerWinCount.text = "胜利：" + winCount;
+        localPlayerUsername.text = ud.Username;
+        localPlayerTotalCount.text = "总场数：" + ud.TotalCount;
+        localPlayerWinCount.text = "胜利：" + ud.WinCount;
     }
-    public void ClearEnemyPlayerRes()
+
+    /// <summary>
+    /// 客场角色
+    /// </summary>
+    /// <param name="ud"></param>
+    void SetAwayPlayerRes(UserData ud)
+    {
+        enemyPlayerUsername.text = ud.Username;
+        enemyPlayerTotalCount.text = "总场数：" + ud.TotalCount;
+        enemyPlayerWinCount.text = "胜利：" + ud.WinCount;
+    }
+
+    /// <summary>
+    /// 清除客人
+    /// </summary>
+    public void ClearAwayPlayerRes()
     {
         enemyPlayerUsername.text = "";
         enemyPlayerTotalCount.text = "等待玩家加入....";
         enemyPlayerWinCount.text = "";
     }
+    #endregion  
+   
+
 
 
     #region Click
