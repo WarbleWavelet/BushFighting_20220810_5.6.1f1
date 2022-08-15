@@ -25,7 +25,7 @@ public class RegisterPanel : BasePanel //注册
     #region 生命
    private void Start()
     {
-        registerRequest = GetComponent<RegisterRequest>();
+        registerRequest = GetOrAddComponent<RegisterRequest>(gameObject);
 
         usernameIF = transform.Find("UsernameLabel/UsernameInput").GetComponent<InputField>();
         passwordIF = transform.Find("PasswordLabel/PasswordInput").GetComponent<InputField>();

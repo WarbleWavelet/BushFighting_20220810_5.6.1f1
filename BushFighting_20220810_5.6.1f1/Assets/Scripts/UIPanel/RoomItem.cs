@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomItem : MonoBehaviour {
+public class RoomItem : MonoBehaviour 
+{
 
     public Text username;
     public Text totalCount;
@@ -13,8 +14,9 @@ public class RoomItem : MonoBehaviour {
     private int id;
     private RoomListPanel panel;
 
-	// Use this for initialization
-	void Start () {
+
+	void Start () 
+    {
         if (joinButton != null)
         {
             joinButton.onClick.AddListener(OnJoinClick);
@@ -24,6 +26,7 @@ public class RoomItem : MonoBehaviour {
     {
         SetRoomInfo(id, username, totalCount.ToString(), winCount.ToString(), panel);
     }
+
     public void SetRoomInfo(int id,string username, string totalCount, string winCount, RoomListPanel panel)
     {
         this.id = id;

@@ -5,7 +5,9 @@ using Protocol;
 
 public class PlayerMgr : BaseManager
 {
-    public PlayerMgr(GameFacade facade) : base(facade) { }
+
+    #region ◊÷ Ùππ‘Ï
+ public PlayerMgr(GameFacade facade) : base(facade) { }
 
     private UserData userData;
     private Dictionary<RoleType, RoleData> roleDataDict = new Dictionary<RoleType, RoleData>();
@@ -18,6 +20,8 @@ public class PlayerMgr : BaseManager
 
     private ShootRequest shootRequest;
     private AttackRequest attackRequest;
+    #endregion
+   
 
     public void UpdateResult(int totalCount,int winCount)
     {
@@ -48,7 +52,7 @@ public class PlayerMgr : BaseManager
         foreach(RoleData rd in roleDataDict.Values)
         {
             GameObject go= GameObject.Instantiate(rd.RolePrefab, rd.SpawnPosition, Quaternion.identity);
-            go.tag = "Player";
+            go.tag = Tags.Player;
             if (rd.RoleType == currentRoleType)
             {
                 currentRoleGameObject = go;
@@ -82,15 +86,18 @@ public class PlayerMgr : BaseManager
     public void CreateSyncRequest()
     {
         playerSyncRequest=new GameObject("PlayerSyncRequest");
-        playerSyncRequest.AddComponent<MoveRequest>().SetLocalPlayer(currentRoleGameObject.transform, currentRoleGameObject.GetComponent<PlayerMove>())
+        playerSyncRequest.AddComponent<MoveRequest>().SetLocalPlayer(
+            currentRoleGameObject.transform,
+            currentRoleGameObject.GetComponent<PlayerMove>())
             .SetRemotePlayer(remoteRoleGameObject.transform);
+
         shootRequest=playerSyncRequest.AddComponent<ShootRequest>();
         shootRequest.playerMng = this;
         attackRequest = playerSyncRequest.AddComponent<AttackRequest>();
     }
     public void Shoot(GameObject arrowPrefab,Vector3 pos,Quaternion rotation)
     {
-        facade.PlayNormalSound(AudioMgr.Sound_Timer);
+        facade.PlayUIAudio(AudioMgr.Sound_Timer);
         GameObject.Instantiate(arrowPrefab, pos, rotation).GetComponent<Arrow>().isLocal = true;
         shootRequest.SendRequest(arrowPrefab.GetComponent<Arrow>().roleType, pos, rotation.eulerAngles);
     }

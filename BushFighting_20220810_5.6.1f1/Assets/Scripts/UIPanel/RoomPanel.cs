@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Protocol;
 
-public class RoomPanel : BasePanel {
+public class RoomPanel : BasePanel
+{
 
     private Text localPlayerUsername;
     private Text localPlayerTotalCount;
@@ -29,6 +30,7 @@ public class RoomPanel : BasePanel {
 
     private bool isPopPanel = false;
 
+    #region 生命
     private void Start()
     {
         localPlayerUsername = transform.Find("BluePanel/Username").GetComponent<Text>();
@@ -43,35 +45,46 @@ public class RoomPanel : BasePanel {
         startButton = transform.Find("StartButton");
         exitButton = transform.Find("ExitButton");
 
-        transform.Find("StartButton").GetComponent<Button>().onClick.AddListener(OnStartClick);
-        transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(OnExitClick);
 
-        quitRoomRequest = GetComponent<QuitRoomRequest>();
-        startGameRequest = GetComponent<StartGameRequest>();
+        AddBtnListener( transform.Find("StartButton") , OnStartClick );
+        AddBtnListener( transform.Find("ExitButton") , OnExitClick );
+
+         //
+        quitRoomRequest = GetOrAddComponent<QuitRoomRequest>(gameObject);
+        GetOrAddComponent<UpdateRoomRequest>(gameObject);
+        startGameRequest = GetOrAddComponent<StartGameRequest>(gameObject);
 
         EnterAnim();
     }
     public override void OnEnter()
     {
-        if(bluePanel!=null)
+        if (bluePanel != null)
+        { 
             EnterAnim();
+        }
+            
     }
-    public override void OnExit()
-    {
-        ExitAnim();
-    }
+
     public override void OnPause()
     {
         ExitAnim();
     }
+
+    public override void OnExit()
+    {
+        ExitAnim();
+    }
+
     public override void OnResume()
     {
         EnterAnim();
     }
+    #endregion  
+  
 
     private void Update()
     {
-        if (ud != null)
+        if (ud != null)//设置玩家信息
         {
             SetLocalPlayerRes(ud.Username, ud.TotalCount.ToString(), ud.WinCount.ToString());
             ClearEnemyPlayerRes();
@@ -81,27 +94,40 @@ public class RoomPanel : BasePanel {
         {
             SetLocalPlayerRes(ud1.Username, ud1.TotalCount.ToString(), ud1.WinCount.ToString());
             if (ud2 != null)
+            {
                 SetEnemyPlayerRes(ud2.Username, ud2.TotalCount.ToString(), ud2.WinCount.ToString());
+            }
+
             else
+            {
                 ClearEnemyPlayerRes();
-            ud1 = null; ud2 = null;
+            }
+
+            ud1 = null;
+            ud2 = null;
         }
         if (isPopPanel)
-        {
+        {                                                                        
             uiMgr.PopPanel();
             isPopPanel = false;
         }
     }
 
-    public void SetLocalPlayerResSync()
+
+
+    #region 异步
+    public void SetLocalPlayerResAsync()
     {
         ud = facade.GetUserData();
     }
-    public void SetAllPlayerResSync(UserData ud1,UserData ud2)
+
+    public void SetAllPlayerResAsync(UserData ud1,UserData ud2)
     {
         this.ud1 = ud1;
         this.ud2 = ud2;
     }
+    #endregion  
+
     public void SetLocalPlayerRes(string username, string totalCount, string winCount)
     {
         localPlayerUsername.text = username;
@@ -121,14 +147,21 @@ public class RoomPanel : BasePanel {
         enemyPlayerWinCount.text = "";
     }
 
-    private void OnStartClick()
+
+    #region Click
+  private void OnStartClick()
     {
         startGameRequest.SendRequest();
     }
+
     private void OnExitClick()
     {
         quitRoomRequest.SendRequest();
     }
+    #endregion
+
+  
+
     public void OnExitResponse()
     {
         isPopPanel = true;

@@ -1,9 +1,24 @@
+/****************************************************
+    文件：Tags.cs
+	作者：lenovo
+    邮箱: 
+    日期：2022/8/15 13:1:20
+	功能：
+*****************************************************/
 
 using UnityEngine;
 using System.Collections;
+using System;
+using System.IO;
 //����͸�� Everything
 public class FollowTarget : MonoBehaviour
 {
+
+
+
+
+
+
 
     public Transform target;
     private Vector3 offset;
@@ -17,14 +32,27 @@ public class FollowTarget : MonoBehaviour
     //��ת
     private bool isRotate = false;
     public float rotateSpeed = 10f;
-
-
-
+  
     void Start()
     {
+
+
+
+
+
+
+
+
+
+
+
+
         offset = transform.position - target.transform.position;
 
         //offset = new Vector3(0, offset.y, offset.z);//x=0�����Ҳ�ƫ��
+
+        Console.WriteLine(  System.DateTime.UtcNow.Date);
+
     }
 
     // Update is called once per frame

@@ -8,17 +8,24 @@ using System.Threading;
 
 namespace GameServer.Servers
 {
+
+    /// <summary>
+    /// 房间状态
+    /// </summary>
     enum RoomState
     {
-        WaitingJoin,
-        WaitingBattle,
-        Battle,
+        WaitingJoin,//等待队友
+        WaitingBattle,//加载战斗中
+        Battle,//战斗中
         End
     }
     class Room
     {
+
+
+        #region 字属 构造
         private const int MAX_HP = 200;
-        private List<Client> clientRoom = new List<Client>();
+        private List<Client> clientLst = new List<Client>();
         private RoomState state = RoomState.WaitingJoin;
         private Server server;
 
@@ -26,17 +33,24 @@ namespace GameServer.Servers
         {
             this.server = server;
         }
+        #endregion
 
+
+        /// <summary>
+        /// 等待
+        /// </summary>
+        /// <returns></returns>
         public bool IsWaitingJoin()
         {
             return state == RoomState.WaitingJoin;
         }
+
         public void AddClient(Client client)
         {
             client.HP = MAX_HP;
-            clientRoom.Add(client);
+            clientLst.Add(client);
             client.Room = this;
-            if (clientRoom.Count>= 2)
+            if (clientLst.Count>= 2)
             {
                 state = RoomState.WaitingBattle;
             }
@@ -44,9 +58,9 @@ namespace GameServer.Servers
         public void RemoveClient(Client client)
         {
             client.Room = null;
-            clientRoom.Remove(client);
+            clientLst.Remove(client);
 
-            if (clientRoom.Count >= 2)
+            if (clientLst.Count >= 2)
             {
                 state = RoomState.WaitingBattle;
             }
@@ -55,23 +69,29 @@ namespace GameServer.Servers
                 state = RoomState.WaitingJoin;
             }
         }
+
+        /// <summary>
+        /// 房主
+        /// </summary>
+        /// <returns></returns>
         public string GetHouseOwnerData()
         {
-            return clientRoom[0].GetUserData();
+            return clientLst[0].GetUserData();
         }
         
         public int GetId()
         {
-            if (clientRoom.Count > 0)
+            if (clientLst.Count > 0)
             {
-                return clientRoom[0].GetUserId();
+                return clientLst[0].GetUserId();
             }
             return -1;
         }
+
         public String GetRoomData()
         {
             StringBuilder sb = new StringBuilder();
-            foreach(Client client in clientRoom)
+            foreach(Client client in clientLst)
             {
                 sb.Append(client.GetUserData() + "|");
             }
@@ -81,9 +101,11 @@ namespace GameServer.Servers
             }
             return sb.ToString();
         }
+
+
         public void BroadcastMessage(Client excludeClient,ActionCode actionCode,string data)
         {
-            foreach(Client client in clientRoom)
+            foreach(Client client in clientLst)
             {
                 if (client != excludeClient)
                 {
@@ -91,31 +113,41 @@ namespace GameServer.Servers
                 }
             }
         }
+
+
         public bool IsHouseOwner(Client client)
         {
-            return client == clientRoom[0];
+            return client == clientLst[0];
         }
+
+
         public void QuitRoom(Client client)
         {
-            if (client == clientRoom[0])
+            if (client == clientLst[0])
             {
                 Close();
             }
             else
-                clientRoom.Remove(client);
+                clientLst.Remove(client);
         }
+
+
         public void Close()
         {
-            foreach(Client client in clientRoom)
+            foreach(Client client in clientLst)
             {
                 client.Room = null;
             }
             server.RemoveRoom(this);
         }
+
+
         public void StartTimer()
         {
             new Thread(RunTimer).Start();
         }
+
+
         private void RunTimer()
         {
             Thread.Sleep(1000);
@@ -126,10 +158,12 @@ namespace GameServer.Servers
             }
             BroadcastMessage(null, ActionCode.StartPlay, "r");
         }
+
+
         public void TakeDamage(int damage,Client excludeClient)
         {
             bool isDie = false;
-            foreach (Client client in clientRoom)
+            foreach (Client client in clientLst)
             {
                 if (client != excludeClient)
                 {
@@ -139,11 +173,13 @@ namespace GameServer.Servers
                     }
                 }
             }
-            if (isDie == false) return;
-            //如果其中一个角色死亡，要结束游戏
-            foreach (Client client in clientRoom)
+            if (isDie == false)
             {
-                if (client.IsDie())
+                 return;
+            }
+            foreach (Client client in clientLst)  
+            {
+                if (client.IsDie()) //如果其中一个角色死亡，要结束游戏
                 {
                     client.UpdateResult(false);
                     client.Send(ActionCode.GameOver, ((int)ReturnCode.Fail).ToString());

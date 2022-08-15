@@ -1,8 +1,17 @@
+﻿/****************************************************
+   文件：.cs
+   作者：lenovo
+   日期：2022/8/15 9:50:26
+   功能：
+*****************************************************/
 using System;
 using UnityEngine;
 
 namespace UnityStandardAssets.ImageEffects
-{
+{    
+
+
+
     [ExecuteInEditMode]
     [RequireComponent (typeof(Camera))]
     [AddComponentMenu ("Image Effects/Bloom and Glow/Bloom")]
@@ -82,6 +91,9 @@ namespace UnityStandardAssets.ImageEffects
 
         public override bool CheckResources ()
         {
+
+
+     
             CheckSupport (false);
 
             screenBlend = CheckShaderAndCreateMaterial (screenBlendShader, screenBlend);
@@ -106,7 +118,7 @@ namespace UnityStandardAssets.ImageEffects
 
             doHdr = false;
             if (hdr == HDRBloomMode.Auto)
-                doHdr = source.format == RenderTextureFormat.ARGBHalf && GetComponent<Camera>().hdr;
+                doHdr = source.format == RenderTextureFormat.ARGBHalf && GetComponent<Camera>().allowHDR;
             else {
                 doHdr = hdr == HDRBloomMode.On;
             }

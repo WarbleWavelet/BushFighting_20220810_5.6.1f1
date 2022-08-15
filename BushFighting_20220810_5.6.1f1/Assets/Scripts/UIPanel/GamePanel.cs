@@ -5,8 +5,10 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Protocol;
 
-public class GamePanel : BasePanel {
+public class GamePanel : BasePanel 
+{
 
+    #region 字属构造
     private Text timer;
     private int time = -1;
     private Button successBtn;
@@ -14,6 +16,11 @@ public class GamePanel : BasePanel {
     private Button exitBtn;
 
     private QuitBattleRequest quitBattleRequest;
+    #endregion
+
+
+
+    #region 生命
     private void Start()
     {
         timer = transform.Find("Timer").GetComponent<Text>();
@@ -28,7 +35,11 @@ public class GamePanel : BasePanel {
         exitBtn.onClick.AddListener(OnExitClick);
         exitBtn.gameObject.SetActive(false);
 
-        quitBattleRequest = GetComponent<QuitBattleRequest>();
+         //
+        GetOrAddComponent<ShowTimerRequest>(gameObject);
+        GetOrAddComponent<StartPlayRequest>(gameObject);
+        GetOrAddComponent<GameOverRequest>(gameObject);
+        quitBattleRequest = GetOrAddComponent<QuitBattleRequest>(gameObject);
 
     }
     public override void OnEnter()
@@ -50,6 +61,8 @@ public class GamePanel : BasePanel {
             time = -1;
         }
     }
+    #endregion
+
     private void OnResultClick()
     {
         uiMgr.PopPanel();
@@ -82,7 +95,7 @@ public class GamePanel : BasePanel {
         timer.color = tempColor;
         timer.transform.DOScale(2, 0.3f).SetDelay(0.3f);
         timer.DOFade(0, 0.3f).SetDelay(0.3f).OnComplete(() => timer.gameObject.SetActive(false));
-        facade.PlayNormalSound(AudioMgr.Sound_Alert);
+        facade.PlayUIAudio(AudioMgr.Sound_Alert);
     }
     public void OnGameOverResponse(ReturnCode returnCode)
     {

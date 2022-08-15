@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameServer.Servers.Room" Collapsed="true">
+    <Position X="3.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KCAAAAAAAAAAAAAAAAQIAEAAIQAAAAAEBAACggKgAAI=</HashCode>
+      <FileName>Servers\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Controller.RoomController" Collapsed="true">
+    <Position X="3.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAAAAACAEAA=</HashCode>
+      <FileName>Controller\RoomController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GameServer.Servers.RoomState" Collapsed="true">
+    <Position X="3.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAACAAIgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Servers\Room.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

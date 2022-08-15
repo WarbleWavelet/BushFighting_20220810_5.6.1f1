@@ -28,7 +28,7 @@ public class LoginPanel : BasePanel
     #region 生命
   private void Start()
     {
-        loginRequest = GetComponent<LoginRequest>();
+        loginRequest = GetOrAddComponent<LoginRequest>(gameObject);
         usernameIF = transform.Find("UsernameLabel/UsernameInput").GetComponent<InputField>();
         passwordIF = transform.Find("PasswordLabel/PasswordInput").GetComponent<InputField>();
         closeButton = transform.Find("CloseButton").GetComponent<Button>();

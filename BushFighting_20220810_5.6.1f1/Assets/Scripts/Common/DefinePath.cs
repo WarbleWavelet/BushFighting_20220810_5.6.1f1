@@ -1,4 +1,4 @@
-/****************************************************
+﻿/****************************************************
     文件：DefinePath.cs
 	作者：lenovo
     邮箱: 
@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class DefinePath
 {
+
     public const string ClientMgr_IP = "127.0.0.1";
     public const int ClientMgr_PORT = 6688;
     #region AudioMgr

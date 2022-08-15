@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 using GameServer.Model;
 using MySql.Data.MySqlClient;
 
-namespace GameServer.DAO
+
+
+namespace GameServer.DAO/// DAO(Data Access Object)是一个数据访问接口
 {
     class ResultDAO
     {
+
+        /// <summary>
+        /// 查战绩表
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public Result GetResultByUserid( MySqlConnection conn,int userId)
         {
             MySqlDataReader reader = null;
@@ -43,6 +52,12 @@ namespace GameServer.DAO
             }
             return null;
         }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="res"></param>
         public void UpdateOrAddResult(MySqlConnection conn, Result res)
         {
             try

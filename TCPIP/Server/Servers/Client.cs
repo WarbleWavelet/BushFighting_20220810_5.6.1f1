@@ -188,6 +188,8 @@ namespace GameServer.Servers
             this.user = user;
             this.result = result;
         }
+
+
         public string GetUserData()
         {
             return user.Id + "," + user.Username + "," + result.TotalCount + "," + result.WinCount;

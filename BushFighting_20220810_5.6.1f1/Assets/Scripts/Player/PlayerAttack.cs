@@ -1,8 +1,21 @@
-﻿using System.Collections;
+﻿/****************************************************
+
+	文件：
+	作者：lenovo
+	日期：2022/8/15 11:24:33
+	功能：
+
+*****************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour {
+public class PlayerAttack : MonoBehaviour 
+{
+
+   
+
+   
 
     public GameObject arrowPrefab;
     private Animator anim;

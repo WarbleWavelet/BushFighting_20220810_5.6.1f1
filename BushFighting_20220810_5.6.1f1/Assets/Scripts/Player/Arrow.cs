@@ -21,7 +21,7 @@ public class Arrow : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            GameFacade.Instance.PlayNormalSound(AudioMgr.Sound_ShootPerson);
+            GameFacade.Instance.PlayUIAudio(AudioMgr.Sound_ShootPerson);
             if (isLocal)
             {
                 bool playerIsLocal = other.GetComponent<PlayerInfo>().isLocal;
@@ -33,7 +33,7 @@ public class Arrow : MonoBehaviour {
         }
         else
         {
-            GameFacade.Instance.PlayNormalSound(AudioMgr.Sound_Miss);
+            GameFacade.Instance.PlayUIAudio(AudioMgr.Sound_Miss);
         }
         GameObject.Instantiate(explosionEffect, transform.position, transform.rotation);
         GameObject.Destroy(this.gameObject);

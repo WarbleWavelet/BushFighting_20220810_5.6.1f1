@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class BasePanel : MonoBehaviour 
 {
@@ -24,7 +25,7 @@ public class BasePanel : MonoBehaviour
 
     protected void PlayClickSound()
     {
-        facade.PlayNormalSound(AudioMgr.Sound_ButtonClick);
+        facade.PlayUIAudio(AudioMgr.Sound_ButtonClick);
     }
 
 
@@ -35,7 +36,7 @@ public class BasePanel : MonoBehaviour
     /// </summary>
     public virtual void OnEnter()
     {
-
+   
     }
 
     /// <summary>
@@ -84,5 +85,53 @@ public class BasePanel : MonoBehaviour
         obj.gameObject.SetActive(state);
     }
     #endregion
+    protected T GetOrAddComponent<T>(GameObject go) where T : Component
+    {
+        T t = go.GetComponent<T>();
+        if (t == null)
+        {
+            t = go.AddComponent<T>();
+        }
+
+        return t;
+    }
+
+    #region SetText
+    protected void SetText(Text text, string content = "")
+    {
+        text.text = content;
+
+    }
+    protected void SetText(Text text, int num = 0)
+    {
+        text.text = num.ToString();
+
+    }
+    protected void SetText(Transform trans, string content = "")
+    {
+        trans.GetComponent<Text>().text = content;
+
+    }
+    protected void SetText(Transform trans, int num = 0)
+    {
+        trans.GetComponent<Text>().text = num.ToString();
+
+    }
+    #endregion
+
+    protected void AddBtnListener(Transform t, UnityEngine.Events.UnityAction action)
+    {
+        Button btn = t.GetComponent<Button>();
+        if (btn != null)
+        {
+            btn.onClick.AddListener(action);
+        }
+        else
+        {
+
+
+            Debug.LogErrorFormat("组件{0}没有Button组件", t.gameObject.name);
+        }
+    }
 
 }

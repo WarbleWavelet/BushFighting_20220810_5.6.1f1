@@ -13,11 +13,33 @@ namespace GameServer.Controller
         {
             requestCode = ReqCode.Room;
         }
+
+
+        #region 房间的增删查改
         public string CreateRoom(string data, Client client, Server server)
         {
             server.CreateRoom(client);
             return ((int)ReturnCode.Success).ToString()+","+ ((int)RoleType.Blue).ToString();
         }
+
+        public string QuitRoom(string data, Client client, Server server)
+        {
+            bool isHouseOwner = client.IsHouseOwner();
+            Room room = client.Room;
+            if (isHouseOwner)
+            {
+                room.BroadcastMessage(client, ActionCode.QuitRoom, ((int)ReturnCode.Success).ToString());
+                room.Close();
+                return ((int)ReturnCode.Success).ToString();
+            }
+            else
+            {
+                client.Room.RemoveClient(client);
+                room.BroadcastMessage(client, ActionCode.UpdateRoom, room.GetRoomData());
+                return ((int)ReturnCode.Success).ToString();
+            }
+        }
+
         public string ListRoom(string data, Client client, Server server)
         {
             StringBuilder sb = new StringBuilder();
@@ -25,19 +47,22 @@ namespace GameServer.Controller
             {
                 if (room.IsWaitingJoin())
                 {
-                    sb.Append(room.GetHouseOwnerData()+"|");
+                    sb.Append(room.GetHouseOwnerData()+"|"); //房主+1
                 }
             }
-            if (sb.Length == 0)
+
+            if (sb.Length == 0)//非等待
             {
                 sb.Append("0");
             }
             else
             {
-                sb.Remove(sb.Length - 1, 1);
+                sb.Remove(sb.Length - 1, 1); //去掉多出来的"|"                       
             }
             return sb.ToString();
         }
+
+
         public string JoinRoom(string data, Client client, Server server)
         {
             int id = int.Parse(data);
@@ -58,22 +83,10 @@ namespace GameServer.Controller
                 return ((int)ReturnCode.Success).ToString() + "," + ((int)RoleType.Red).ToString()+ "-" + roomData;
             }
         }
-        public string QuitRoom(string data, Client client, Server server)
-        {
-            bool isHouseOwner = client.IsHouseOwner();
-            Room room = client.Room;
-            if (isHouseOwner)
-            {
-                room.BroadcastMessage(client, ActionCode.QuitRoom, ((int)ReturnCode.Success).ToString());
-                room.Close();
-                return ((int)ReturnCode.Success).ToString();
-            }
-            else
-            {
-                client.Room.RemoveClient(client);
-                room.BroadcastMessage(client, ActionCode.UpdateRoom, room.GetRoomData());
-                return ((int)ReturnCode.Success).ToString();
-            }
-        }
+        #endregion
+       
+
+
+
     }
 }

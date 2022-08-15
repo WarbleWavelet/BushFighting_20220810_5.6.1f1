@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
@@ -8,7 +8,10 @@ public class RequestMgr : BaseManager
 
     private Dictionary<ActionCode, BaseRequest> requestDict = new Dictionary<ActionCode, BaseRequest>();
 
-    public void AddRequest(ActionCode actionCode,BaseRequest request)
+
+
+    #region Request
+  public void AddRequest(ActionCode actionCode,BaseRequest request)
     {
         requestDict.Add(actionCode, request);
     }
@@ -25,4 +28,6 @@ public class RequestMgr : BaseManager
         }
         request.OnResponse(data);
     }
+    #endregion
+  
 }

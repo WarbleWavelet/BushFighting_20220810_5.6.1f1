@@ -1,15 +1,24 @@
+Ôªø/****************************************************
+
+   Êñá‰ª∂Ôºö
+   ‰ΩúËÄÖÔºöWWS
+   Êó•ÊúüÔºö2022/8/15 13:20:34
+   ÂäüËÉΩÔºöÂ§ß‰Ω¨
+
+*****************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
 using System;
 
-public class GameFacade : MonoBehaviour //¥Û¿–
+public class GameFacade : MonoBehaviour 
 {
 
 
-    #region ◊÷ Ù
-  #region µ•¿˝
+    #region Â≠óÂ±û
+    #region Âçï‰æã
     private static GameFacade _instance;
     public static GameFacade Instance
     {
@@ -34,6 +43,12 @@ public class GameFacade : MonoBehaviour //¥Û¿–
 
     private bool isEnterPlaying = false;
 
+
+
+
+    #endregion
+
+
     internal void SetIFText(string v)
     {                  
         string[] strArr=v.Split(',');
@@ -45,20 +60,7 @@ public class GameFacade : MonoBehaviour //¥Û¿–
         uiMgr.SetIFText(username, password);
     }
 
-    internal void OpenPanel(UIPanelType login)
-    {
-        uiMgr.PushPanel(UIPanelType.Login);
-    }
-
-    internal void ClosePanel(UIPanelType login)
-    {
-    }
-    #endregion
-
-
-
-
-    #region …˙√¸
+    #region ÁîüÂëΩ
     //private void Awake()
     //{
     //    if (_instance != null)
@@ -92,7 +94,7 @@ public class GameFacade : MonoBehaviour //¥Û¿–
 
 
 
-    #region Mgr …˙√¸
+    #region Mgr ÁîüÂëΩ
   private void InitManager()
     {
         uiMgr = new UIMgr(this);
@@ -130,10 +132,11 @@ public class GameFacade : MonoBehaviour //¥Û¿–
     }
     #endregion
 
-   
 
 
-    public void AddRequest(ActionCode actionCode, BaseRequest request)
+
+    #region reqÂíårsp
+  public void AddRequest(ActionCode actionCode, BaseRequest request)
     {
         requestMgr.AddRequest(actionCode, request);
     }
@@ -151,22 +154,31 @@ public class GameFacade : MonoBehaviour //¥Û¿–
     {
         clientMgr.SendRequest(ReqCode, actionCode, data);
     }
+    #endregion
+
+  
 
     public void ShowMessage(string msg)
     {
         uiMgr.ShowMgr(msg);
     }
 
-    public void PlayBgSound(string soundName)
+
+
+    #region Sound
+     public void PlayBgmMusic(string soundName)
     {
         audioMgr.PlayBGMusic(soundName);
     }
-    public void PlayNormalSound(string soundName)
+    public void PlayUIAudio(string soundName)
     {
         audioMgr.PlayUIAudio(soundName);
     }
+    #endregion
 
-    public void SetUserData(UserData ud)
+
+    #region UserData
+     public void SetUserData(UserData ud)
     {
         playerMgr.UserData = ud;
     }
@@ -174,6 +186,8 @@ public class GameFacade : MonoBehaviour //¥Û¿–
     {
         return playerMgr.UserData;
     }
+    #endregion  
+   
     public void SetCurrentRoleType(RoleType rt)
     {
         playerMgr.SetCurrentRoleType(rt);
@@ -184,7 +198,7 @@ public class GameFacade : MonoBehaviour //¥Û¿–
     }
 
 
-    #region ÕÊº“
+    #region Áé©ÂÆ∂
   public void EnterPlayingSync()
     {
         isEnterPlaying = true;

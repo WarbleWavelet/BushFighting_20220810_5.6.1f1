@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameServer.Model
 {
+    /// <summary>
+    /// 战绩表
+    /// </summary>
     class Result
     {
         public Result(int id, int userId,int totalCount,int winCount)

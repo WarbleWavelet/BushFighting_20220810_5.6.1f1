@@ -27,7 +27,7 @@ public class ClientMgr :BaseManager {
  public override void OnInit()
     {
         base.OnInit();
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         try
         {
             clientSocket.Connect(new IPEndPoint(IPAddress.Parse(IP), PORT));
@@ -41,8 +41,11 @@ public class ClientMgr :BaseManager {
 
     private void Start()
     {
-        clientSocket.BeginReceive(msg.Data,msg.StartIndex, msg.RemainSize, 
-            SocketFlags.None, ReceiveCallback, null);
+        if (clientSocket == null || clientSocket.Connected == false) //socket关闭了
+        {
+            return;
+        }
+        clientSocket.BeginReceive(msg.Data,msg.StartIndex, msg.RemainSize,    SocketFlags.None, ReceiveCallback, null);
     }
 
     public override void OnDestroy()
@@ -81,7 +84,7 @@ public class ClientMgr :BaseManager {
     {
         try
         {
-            if (clientSocket == null || clientSocket.Connected == false)
+            if (clientSocket == null || clientSocket.Connected == false) //socket关闭了
             { 
                  return;
             } 

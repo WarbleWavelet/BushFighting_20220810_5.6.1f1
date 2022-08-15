@@ -21,6 +21,6 @@ public class UpdateRoomRequest : BaseRequest {
         ud1 = new UserData(udStrArray[0]);
         if(udStrArray.Length>1)
             ud2 = new UserData(udStrArray[1]);
-        roomPanel.SetAllPlayerResSync(ud1, ud2);
+        roomPanel.SetAllPlayerResAsync(ud1, ud2);
     }
 }

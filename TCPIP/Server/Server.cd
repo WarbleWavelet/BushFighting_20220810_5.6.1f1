@@ -43,21 +43,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GameServer.DAO.UserDAO" Collapsed="true">
-    <Position X="9" Y="1.5" Width="1.5" />
+    <Position X="10" Y="1.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAABAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>DAO\UserDAO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameServer.DAO.ResultDAO" Collapsed="true">
-    <Position X="9" Y="2.25" Width="1.5" />
+    <Position X="10" Y="2.25" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DAO\ResultDAO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameServer.Servers.Client" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+    <Position X="4.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAGAAAACAAAAAABlAAABQQcACAAAACBBQAoACgAQI=</HashCode>
       <FileName>Servers\Client.cs</FileName>
@@ -91,6 +91,20 @@
       <FileName>Tool\ConnHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="GameServer.Model.Result" Collapsed="true">
+    <Position X="8.75" Y="2.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAABAAAAAAAAAhAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Model.User" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="GameServer.Servers.RoomState" Collapsed="true">
     <Position X="7" Y="2.25" Width="1.5" />
     <TypeIdentifier>
@@ -99,19 +113,19 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="Protocol.ReqCode" Collapsed="true">
-    <Position X="10.75" Y="1.5" Width="1.5" />
+    <Position X="12.25" Y="1.5" Width="1.5" />
     <TypeIdentifier />
   </Enum>
   <Enum Name="Protocol.ActionCode" Collapsed="true">
-    <Position X="10.75" Y="2.25" Width="1.5" />
+    <Position X="12.25" Y="2.25" Width="1.5" />
     <TypeIdentifier />
   </Enum>
   <Enum Name="Protocol.RoleType" Collapsed="true">
-    <Position X="10.75" Y="3.75" Width="1.5" />
+    <Position X="12.25" Y="3.75" Width="1.5" />
     <TypeIdentifier />
   </Enum>
   <Enum Name="Protocol.ReturnCode" Collapsed="true">
-    <Position X="10.75" Y="3" Width="1.5" />
+    <Position X="12.25" Y="3" Width="1.5" />
     <TypeIdentifier />
   </Enum>
   <Font Name="Microsoft YaHei UI" Size="9" />

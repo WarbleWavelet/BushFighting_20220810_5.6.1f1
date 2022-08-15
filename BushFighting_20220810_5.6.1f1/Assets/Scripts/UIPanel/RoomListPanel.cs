@@ -4,8 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Protocol;
-public class RoomListPanel : BasePanel {
+public class RoomListPanel : BasePanel
+{
 
+    #region 字属构造
     private RectTransform battleRes;
     private RectTransform roomList;
     private VerticalLayoutGroup roomLayout;
@@ -13,32 +15,67 @@ public class RoomListPanel : BasePanel {
     private ListRoomRequest listRoomRequest;
     private CreateRoomRequest createRoomRequest;
     private JoinRoomRequest joinRoomRequest;
-    private List<UserData> udList = null;
+    private List<UserData> userdataLst = null;
 
     private UserData ud1 = null;
     private UserData ud2 = null;
+    #endregion
 
+
+
+    #region 生命
     private void Start()
     {
         battleRes = transform.Find("BattleRes").GetComponent<RectTransform>();
         roomList = transform.Find("RoomList").GetComponent<RectTransform>();
         roomLayout = transform.Find("RoomList/ScrollRect/Layout").GetComponent<VerticalLayoutGroup>();
         roomItemPrefab = Resources.Load("UIPanel/RoomItem") as GameObject;
-        transform.Find("RoomList/CloseButton").GetComponent<Button>().onClick.AddListener(OnCloseClick);
-        transform.Find("RoomList/CreateRoomButton").GetComponent<Button>().onClick.AddListener(OnCreateRoomClick);
-        transform.Find("RoomList/RefreshButton").GetComponent<Button>().onClick.AddListener(OnRefreshClick);
-        listRoomRequest = GetComponent<ListRoomRequest>();
-        createRoomRequest = GetComponent<CreateRoomRequest>();
-        joinRoomRequest = GetComponent<JoinRoomRequest>();
+
+        AddBtnListener( transform.Find("RoomList/CloseButton"), OnCloseClick);
+        AddBtnListener(transform.Find("RoomList/CreateRoomButton"), OnCreateRoomClick);
+        AddBtnListener(transform.Find("RoomList/RefreshButton"), OnRefreshClick);
+
+        //
+        listRoomRequest = GetOrAddComponent<ListRoomRequest>(gameObject);
+        createRoomRequest = GetOrAddComponent<CreateRoomRequest>(gameObject);
+        joinRoomRequest = GetOrAddComponent<JoinRoomRequest>(gameObject);
+        GetOrAddComponent<UpdateResultRequest>(gameObject);
+        //
         EnterAnim();
+    }
+
+    private void Update()
+    {
+        if (userdataLst != null) //异步加载给的lst
+        {
+            ShowLobby(userdataLst);
+            userdataLst = null;
+        }
+
+        if (ud1 != null && ud2 != null)
+        {
+            BasePanel panel = uiMgr.PushPanel(UIPanelType.Room);
+            (panel as RoomPanel).SetAllPlayerResAsync(ud1, ud2);
+            ud1 = null; 
+            ud2 = null;
+        }
+        //if (Input.GetMouseButtonDown(0)) //测试
+        //{
+        //    SetRoomItem(new UserData(11,"周仓",5,7));
+        //    AdaptRoomListLength();
+        //}
+
     }
     public override void OnEnter()
     {
         SetBattleRes();
         if (battleRes != null)
+        { 
             EnterAnim();
-        if(listRoomRequest==null)
-            listRoomRequest = GetComponent<ListRoomRequest>();
+        }
+           
+        listRoomRequest = GetOrAddComponent<ListRoomRequest>(gameObject);
+
         listRoomRequest.SendRequest();
     }
 
@@ -46,37 +83,37 @@ public class RoomListPanel : BasePanel {
     {
         HideAnim();
     }
+
     public override void OnPause()
     {
         HideAnim();
     }
+
+
+    /// <summary>
+    /// 重新回来（房间=>大厅）
+    /// </summary>
     public override void OnResume()
     {
         EnterAnim();
         listRoomRequest.SendRequest();
     }
 
-    private void Update()
-    {
-        if (udList != null)
-        {
-            LoadRoomItem(udList);
-            udList = null;
-        }
-        if (ud1 != null && ud2 != null)
-        {
-            BasePanel panel = uiMgr.PushPanel(UIPanelType.Room);
-            (panel as RoomPanel).SetAllPlayerResSync(ud1, ud2);
-            ud1 = null;ud2 = null;
-        }
-    }
 
 
-    private void OnCloseClick()
+    #endregion
+
+
+    #region Click
+   private void OnCloseClick()
     {
         PlayClickSound();
         uiMgr.PopPanel();
     }
+
+    /// <summary>
+    /// 创建房间
+    /// </summary>
     private void OnCreateRoomClick()
     {
         BasePanel panel= uiMgr.PushPanel(UIPanelType.Room);
@@ -88,6 +125,20 @@ public class RoomListPanel : BasePanel {
         listRoomRequest.SendRequest();
     }
 
+
+    /// <summary>
+    /// 加入房间
+    /// </summary>
+    /// <param name="id"></param>
+    public void OnJoinClick(int id)
+    {
+        joinRoomRequest.SendRequest(id);
+    }
+    #endregion
+
+ 
+
+    #region Anim
     private void EnterAnim()
     {
         gameObject.SetActive(true);
@@ -104,46 +155,74 @@ public class RoomListPanel : BasePanel {
 
         roomList.DOLocalMoveX(1000, 0.5f).OnComplete(() => gameObject.SetActive(false));
     }
+    #endregion
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     private void SetBattleRes()
     {
         UserData ud = facade.GetUserData();
-        transform.Find("BattleRes/Username").GetComponent<Text>().text = ud.Username;
-        transform.Find("BattleRes/TotalCount").GetComponent<Text>().text = "总场数:"+ud.TotalCount.ToString();
-        transform.Find("BattleRes/WinCount").GetComponent<Text>().text = "胜利:"+ud.WinCount.ToString();
+        SetText(transform.Find("BattleRes/Username"), ud.Username);
+        SetText(transform.Find("BattleRes/TotalCount"), "总场数:" + ud.TotalCount.ToString());
+        SetText(transform.Find("BattleRes/WinCount"), "胜利:" + ud.WinCount.ToString());
     }
-    public void OnUpdateResultResponse(int totalCount,int winCount)
+
+
+
+     /// <summary>
+     /// 接受quest
+     /// </summary>
+     /// <param name="udList"></param>
+    public void LoadRoomItemAsync(List<UserData> udList)
     {
-        facade.UpdateResult(totalCount, winCount);
-        SetBattleRes();
+        this.userdataLst = udList;
     }
-    public void LoadRoomItemSync(List<UserData> udList)
-    {
-        this.udList = udList;
-    }
-    private void LoadRoomItem( List<UserData> udList )
+
+     /// <summary>
+     /// 显示大厅
+     /// </summary>
+     /// <param name="udList"></param>
+    private void ShowLobby( List<UserData> udList )
     {
         RoomItem[] riArray= roomLayout.GetComponentsInChildren<RoomItem>();
-        foreach(RoomItem ri in riArray)
+        foreach(RoomItem ri in riArray) //清空
         {
             ri.DestroySelf();
         }
+
         int count = udList.Count;
         for (int i = 0; i < count; i++)
         {
-            GameObject roomItem = GameObject.Instantiate(roomItemPrefab);
-            roomItem.transform.SetParent(roomLayout.transform);
-            UserData ud = udList[i];
-            roomItem.GetComponent<RoomItem>().SetRoomInfo(ud.Id, ud.Username, ud.TotalCount, ud.WinCount,this);
+            SetRoomItem(udList[i]);
         }
+        AdaptRoomListLength();
+    }
+
+    void SetRoomItem(UserData ud)
+    {
+        GameObject roomItem = GameObject.Instantiate(roomItemPrefab);
+        roomItem.transform.SetParent(roomLayout.transform);
+        roomItem.GetComponent<RoomItem>().SetRoomInfo(ud.Id, ud.Username, ud.TotalCount, ud.WinCount, this);
+    }
+
+
+    void AdaptRoomListLength()
+    {
         int roomCount = GetComponentsInChildren<RoomItem>().Length;
         Vector2 size = roomLayout.GetComponent<RectTransform>().sizeDelta;
         roomLayout.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x,
             roomCount * (roomItemPrefab.GetComponent<RectTransform>().sizeDelta.y + roomLayout.spacing));
     }
-    public void OnJoinClick(int id)
+
+    #region Response
+   public void OnUpdateResultResponse(int totalCount, int winCount)
     {
-        joinRoomRequest.SendRequest(id);
+        facade.UpdateResult(totalCount, winCount);
+        SetBattleRes();
     }
+
     public void OnJoinResponse( ReturnCode returnCode,UserData ud1,UserData ud2)
     {
         switch (returnCode)
@@ -160,11 +239,7 @@ public class RoomListPanel : BasePanel {
                 break;
         }
     }
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        LoadRoomItem(1);
-    //    }
-    //}
+    #endregion
+ 
+
 }
