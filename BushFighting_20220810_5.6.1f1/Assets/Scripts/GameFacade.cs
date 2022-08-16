@@ -24,7 +24,7 @@ public class GameFacade : MonoBehaviour
     {
         get
         {
-            if (_instance == null)
+            if ( _instance == null)
             {
                 _instance = GameObject.Find("GameFacade").GetComponent<GameFacade>();
             }
@@ -128,24 +128,47 @@ public class GameFacade : MonoBehaviour
 
 
     #region req和rsp
-  public void AddRequest(ActionCode actionCode, BaseRequest request)
+    /// <summary>
+    /// 增加请求
+    /// </summary>
+    /// <param name="actionCode"></param>
+    /// <param name="request"></param>
+    public void AddRequest(ActionCode actionCode, BaseRequest request)
     {
         requestMgr.AddRequest(actionCode, request);
     }
 
+
+    /// <summary>
+    /// 移除请求
+    /// </summary>
+    /// <param name="actionCode"></param>
     public void RemoveRequest(ActionCode actionCode)
     {
         requestMgr.RemoveRequest(actionCode);
     }
+    /// <summary>
+    /// 发送请求
+    /// </summary>
+    /// <param name="ReqCode"></param>
+    /// <param name="actionCode"></param>
+    /// <param name="data"></param>
+    public void SendRequest(ReqCode ReqCode, ActionCode actionCode, string data)
+    {
+        clientMgr.SendRequest(ReqCode, actionCode, data);
+    }
+
+    /// <summary>
+    /// 处理回复
+    /// </summary>
+    /// <param name="actionCode"></param>
+    /// <param name="data"></param>
     public void HandleReponse(ActionCode actionCode, string data)
     {
         requestMgr.HandleReponse(actionCode, data);
     }
 
-    public void SendRequest(ReqCode ReqCode, ActionCode actionCode, string data)
-    {
-        clientMgr.SendRequest(ReqCode, actionCode, data);
-    }
+
     #endregion
 
   

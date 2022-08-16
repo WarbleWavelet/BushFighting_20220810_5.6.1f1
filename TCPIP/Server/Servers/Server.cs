@@ -23,7 +23,7 @@ namespace GameServer.Servers
         public Server(string ipStr,int port)
         {
             controllerManager = new ControllerManager(this);
-            SetIpAndPort(ipStr, port);
+            ipEndPoint = new IPEndPoint(IPAddress.Parse(ipStr), port);
         }
         #endregion
 
@@ -35,15 +35,6 @@ namespace GameServer.Servers
             serverSocket.Listen(0);
             serverSocket.BeginAccept(AcceptCallBack, null);
         }
-        #endregion  
-
-        public void SetIpAndPort(string ipStr, int port)
-        {
-            ipEndPoint = new IPEndPoint(IPAddress.Parse(ipStr), port);
-        }
-
-    
-
 
         private void AcceptCallBack(IAsyncResult ar  )
         {
@@ -53,6 +44,13 @@ namespace GameServer.Servers
             clientList.Add(client);
             serverSocket.BeginAccept(AcceptCallBack, null);
         }
+        #endregion  
+
+
+        public void SendResponse(Client client,ActionCode actionCode,string data)
+        {
+            client.Send(actionCode, data);
+        }    
 
 
         public void RemoveClient(Client client)
@@ -63,10 +61,7 @@ namespace GameServer.Servers
             }
         }
 
-        public void SendResponse(Client client,ActionCode actionCode,string data)
-        {
-            client.Send(actionCode, data);
-        }
+
 
 
         /// <summary>

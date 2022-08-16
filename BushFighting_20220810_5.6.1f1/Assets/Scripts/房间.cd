@@ -3,7 +3,7 @@
   <Class Name="RoomPanel" Collapsed="true">
     <Position X="3.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BEQAAARCQSAAAAgRoAQAAggAAAEQCCAAAowIABggIAI=</HashCode>
+      <HashCode>BEQAAARCQSAAAAgRoAQAAggAAAEQCCAAAowIAhggIAo=</HashCode>
       <FileName>Assets\Scripts\UIPanel\RoomPanel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="RoomItem" Collapsed="true">
-    <Position X="1" Y="4.5" Width="1.5" />
+    <Position X="1" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAEAAAAAEQAAAEAACAAAAAAEAAAAQAAAgI=</HashCode>
       <FileName>Assets\Scripts\UIPanel\RoomItem.cs</FileName>
@@ -43,7 +43,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="QuitRoomRequest" Collapsed="true">
-    <Position X="1" Y="3.75" Width="2" />
+    <Position X="4" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAIAACAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Request\QuitRoomRequest.cs</FileName>

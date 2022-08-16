@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
 
-public class QuitRoomRequest : BaseRequest {
+public class QuitRoomRequest : BaseRequest
+{
+
+
     private RoomPanel roomPanel;
     public override void Awake()
     {
@@ -14,7 +17,7 @@ public class QuitRoomRequest : BaseRequest {
     }
     public override void SendRequest()
     {
-        base.SendRequest("r");
+        base.SendRequest("r"); //随便的r
     }
     public override void OnResponse(string data)
     {

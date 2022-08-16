@@ -1,12 +1,25 @@
-﻿using System;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/8/15 17:7:13
+	功能：管理房间
+
+*****************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Protocol;
 using GameServer.Servers;
+
+
+
 namespace GameServer.Controller
 {
+
+  
     class RoomController:BaseController
     {
         public RoomController()
@@ -16,12 +29,27 @@ namespace GameServer.Controller
 
 
         #region 房间的增删查改
+        /// <summary>
+        /// 创建房间
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="client"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         public string CreateRoom(string data, Client client, Server server)
         {
             server.CreateRoom(client);
             return ((int)ReturnCode.Success).ToString()+","+ ((int)RoleType.Home).ToString();
         }
 
+
+        /// <summary>
+        /// 退出房间
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="client"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         public string QuitRoom(string data, Client client, Server server)
         {
             bool isHouseOwner = client.IsHouseOwner();
@@ -40,6 +68,14 @@ namespace GameServer.Controller
             }
         }
 
+
+       /// <summary>
+       /// 大厅展示房间
+       /// </summary>
+       /// <param name="data"></param>
+       /// <param name="client"></param>
+       /// <param name="server"></param>
+       /// <returns></returns>
         public string ListRoom(string data, Client client, Server server)
         {
             StringBuilder sb = new StringBuilder();
@@ -63,6 +99,13 @@ namespace GameServer.Controller
         }
 
 
+        /// <summary>
+        /// 加入房间
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="client"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         public string JoinRoom(string data, Client client, Server server)
         {
             int id = int.Parse(data);

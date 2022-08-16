@@ -134,4 +134,39 @@ public class BasePanel : MonoBehaviour
         }
     }
 
+
+    #region GetRect
+    protected RectTransform GetRect(Transform _Object)
+    { 
+      return  _Object.GetComponent<RectTransform>();
+    }       
+    
+    protected RectTransform GetRect(GameObject _Object)
+    { 
+      return  _Object.GetComponent<RectTransform>();
+    }       
+    
+    protected RectTransform GetRect(LayoutGroup _Object)
+    { 
+      return  _Object.GetComponent<RectTransform>();
+    }
+    #endregion
+
+
+    #region SetParent
+    protected void SetParent(GameObject _Object, GameObject parent)
+    {
+        _Object.transform.SetParent( parent.transform );
+    }       
+    
+    protected void SetParent(Transform _Object, Transform parent)
+    {
+        _Object.SetParent( parent.transform );
+    }        
+    
+    protected void SetParent(RectTransform _Object, RectTransform parent)
+    {
+        _Object.SetParent( parent.transform );
+    }
+    #endregion  
 }

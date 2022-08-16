@@ -10,7 +10,7 @@ public class RequestMgr : BaseManager
 
 
 
-    #region Request
+    #region Request增删处理
   public void AddRequest(ActionCode actionCode,BaseRequest request)
     {
         requestDict.Add(actionCode, request);
@@ -19,6 +19,12 @@ public class RequestMgr : BaseManager
     {
         requestDict.Remove(actionCode);
     }
+
+    /// <summary>
+    /// 处理回复
+    /// </summary>
+    /// <param name="actionCode"></param>
+    /// <param name="data"></param>
     public void HandleReponse(ActionCode actionCode, string data)
     {
         BaseRequest request = requestDict.TryGet<ActionCode, BaseRequest>(actionCode);

@@ -81,22 +81,17 @@ namespace GameServer.Servers
             server.RemoveClient(this);
         }
 
-      
+
         #endregion
 
 
+
+        #region Msg
         /// <summary>
-        /// 处理消息
+        /// 发消息
         /// </summary>
-        /// <param name="ReqCode"></param>
         /// <param name="actionCode"></param>
         /// <param name="data"></param>
-        private void OnProcessMessage(ReqCode ReqCode,ActionCode actionCode,string data)
-        {
-            server.HandleRequest(ReqCode, actionCode, data, this);
-        }
-
-
         public void Send(ActionCode actionCode, string data)
         {
             try
@@ -110,11 +105,18 @@ namespace GameServer.Servers
             }
         }
 
-        private void ReceiveCallback(IAsyncResult ar)
+        /// <summary>
+        /// 收消息的回调
+        /// </summary>
+        /// <param name="ar"></param>
+          private void ReceiveCallback(IAsyncResult ar)
         {
             try
             {
-                if (clientSocket == null || clientSocket.Connected == false) return;
+                if (clientSocket == null || clientSocket.Connected == false)
+                {
+                     return;
+                } 
                 int count = clientSocket.EndReceive(ar);
                 if (count == 0)
                 {
@@ -129,6 +131,26 @@ namespace GameServer.Servers
                 Close();
             }
         }
+
+
+        /// <summary>
+        /// 处理消息
+        /// </summary>
+        /// <param name="ReqCode">请求码</param>
+        /// <param name="actionCode">动作码</param>
+        /// <param name="data"></param>
+        private void OnProcessMessage(ReqCode ReqCode,ActionCode actionCode,string data)
+        {
+            server.HandleRequest(ReqCode, actionCode, data, this);
+        }
+
+        #endregion  
+
+
+
+
+
+
 
         #region Room
         public bool IsHouseOwner()

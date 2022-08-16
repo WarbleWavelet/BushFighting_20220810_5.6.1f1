@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/15 20:55:51
+	功能：房间UI
+
+*****************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,17 +16,18 @@ using Protocol;
 public class RoomPanel : BasePanel
 {
 
+    
     #region 字属
-    private Text localPlayerUsername;
-    private Text localPlayerTotalCount;
-    private Text localPlayerWinCount;
+    private Text homePlayerUsername;
+    private Text homePlayerTotalCount;
+    private Text homePlayerWinCount;
 
-    private Text enemyPlayerUsername;
-    private Text enemyPlayerTotalCount;
-    private Text enemyPlayerWinCount;
+    private Text awayPlayerUsername;
+    private Text awayPlayerTotalCount;
+    private Text awayPlayerWinCount;
 
-    private Transform bluePanel;
-    private Transform redPanel;
+    private Transform homePanel;//房主的UI面板
+    private Transform awayPanel;//对手UI
     private Transform startButton;
     private Transform exitButton;
 
@@ -28,23 +37,24 @@ public class RoomPanel : BasePanel
 
     private QuitRoomRequest quitRoomRequest;
     private StartGameRequest startGameRequest;
+    UpdateRoomRequest updateRoomRequest;
 
-    private bool isPopPanel = false;
-    #endregion  
-   
+    private bool isPopPanel = false; //异步改这个值，主线程中收起UI
+    #endregion
+
 
     #region 生命
     private void Start()
     {
-        localPlayerUsername = transform.Find("BluePanel/Username").GetComponent<Text>();
-        localPlayerTotalCount = transform.Find("BluePanel/TotalCount").GetComponent<Text>();
-        localPlayerWinCount = transform.Find("BluePanel/WinCount").GetComponent<Text>();
-        enemyPlayerUsername = transform.Find("RedPanel/Username").GetComponent<Text>();
-        enemyPlayerTotalCount = transform.Find("RedPanel/TotalCount").GetComponent<Text>();
-        enemyPlayerWinCount = transform.Find("RedPanel/WinCount").GetComponent<Text>();
+        homePlayerUsername = transform.Find("BluePanel/Username").GetComponent<Text>();
+        homePlayerTotalCount = transform.Find("BluePanel/TotalCount").GetComponent<Text>();
+        homePlayerWinCount = transform.Find("BluePanel/WinCount").GetComponent<Text>();
+        awayPlayerUsername = transform.Find("RedPanel/Username").GetComponent<Text>();
+        awayPlayerTotalCount = transform.Find("RedPanel/TotalCount").GetComponent<Text>();
+        awayPlayerWinCount = transform.Find("RedPanel/WinCount").GetComponent<Text>();
 
-        bluePanel = transform.Find("BluePanel");
-        redPanel = transform.Find("RedPanel");
+        homePanel = transform.Find("BluePanel");
+        awayPanel = transform.Find("RedPanel");
         startButton = transform.Find("StartButton");
         exitButton = transform.Find("ExitButton");
 
@@ -54,7 +64,7 @@ public class RoomPanel : BasePanel
 
          //
         quitRoomRequest = GetOrAddComponent<QuitRoomRequest>(gameObject);
-        GetOrAddComponent<UpdateRoomRequest>(gameObject);
+        updateRoomRequest = GetOrAddComponent<UpdateRoomRequest>(gameObject);
         startGameRequest = GetOrAddComponent<StartGameRequest>(gameObject);
 
         EnterAnim();
@@ -76,8 +86,7 @@ public class RoomPanel : BasePanel
             {
                 SetRoleRes(RoleType.Away, udAway);
             }
-
-            else
+            else //对手没了
             {
                 ClearAwayPlayerRes();
             }
@@ -85,7 +94,7 @@ public class RoomPanel : BasePanel
             udHome = null;
             udAway = null;
         }
-        if (isPopPanel)
+        if (isPopPanel) //主线程中收起UI
         {                                                                        
             uiMgr.PopPanel();
             isPopPanel = false;
@@ -93,7 +102,7 @@ public class RoomPanel : BasePanel
     }
     public override void OnEnter()
     {
-        if (bluePanel != null)
+        if (homePanel != null)
         { 
             EnterAnim();
         }
@@ -167,9 +176,9 @@ public class RoomPanel : BasePanel
     /// <param name="ud"></param>
     void SetHomePlayerRes( UserData ud)
     {
-        localPlayerUsername.text = ud.Username;
-        localPlayerTotalCount.text = "总场数：" + ud.TotalCount;
-        localPlayerWinCount.text = "胜利：" + ud.WinCount;
+        homePlayerUsername.text = ud.Username;
+        homePlayerTotalCount.text = "总场数：" + ud.TotalCount;
+        homePlayerWinCount.text = "胜利：" + ud.WinCount;
     }
 
     /// <summary>
@@ -178,9 +187,9 @@ public class RoomPanel : BasePanel
     /// <param name="ud"></param>
     void SetAwayPlayerRes(UserData ud)
     {
-        enemyPlayerUsername.text = ud.Username;
-        enemyPlayerTotalCount.text = "总场数：" + ud.TotalCount;
-        enemyPlayerWinCount.text = "胜利：" + ud.WinCount;
+        awayPlayerUsername.text = ud.Username;
+        awayPlayerTotalCount.text = "总场数：" + ud.TotalCount;
+        awayPlayerWinCount.text = "胜利：" + ud.WinCount;
     }
 
     /// <summary>
@@ -188,9 +197,9 @@ public class RoomPanel : BasePanel
     /// </summary>
     public void ClearAwayPlayerRes()
     {
-        enemyPlayerUsername.text = "";
-        enemyPlayerTotalCount.text = "等待玩家加入....";
-        enemyPlayerWinCount.text = "";
+        awayPlayerUsername.text = "";
+        awayPlayerTotalCount.text = "等待玩家加入....";
+        awayPlayerWinCount.text = "";
     }
     #endregion  
    
@@ -215,6 +224,8 @@ public class RoomPanel : BasePanel
     {
         isPopPanel = true;
     }
+
+
     public void OnStartResponse(ReturnCode returnCode)
     {
         if (returnCode == ReturnCode.Fail)
@@ -231,10 +242,10 @@ public class RoomPanel : BasePanel
     private void EnterAnim()
     {
         gameObject.SetActive(true);
-        bluePanel.localPosition = new Vector3(-1000, 0, 0);
-        bluePanel.DOLocalMoveX(-174, 0.4f);
-        redPanel.localPosition = new Vector3(1000, 0, 0);
-        redPanel.DOLocalMoveX(174, 0.4f);
+        homePanel.localPosition = new Vector3(-1000, 0, 0);
+        homePanel.DOLocalMoveX(-174, 0.4f);
+        awayPanel.localPosition = new Vector3(1000, 0, 0);
+        awayPanel.DOLocalMoveX(174, 0.4f);
         startButton.localScale = Vector3.zero;
         startButton.DOScale(1, 0.4f);
         exitButton.localScale = Vector3.zero;
@@ -242,8 +253,8 @@ public class RoomPanel : BasePanel
     }
     private void ExitAnim()
     {
-        bluePanel.DOLocalMoveX(-1000, 0.4f);
-        redPanel.DOLocalMoveX(1000, 0.4f);
+        homePanel.DOLocalMoveX(-1000, 0.4f);
+        awayPanel.DOLocalMoveX(1000, 0.4f);
         startButton.DOScale(0, 0.4f);
         exitButton.DOScale(0, 0.4f).OnComplete(() => gameObject.SetActive(false));
     }

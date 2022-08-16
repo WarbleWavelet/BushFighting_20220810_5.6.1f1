@@ -36,14 +36,14 @@ public class RoomListPanel : BasePanel
     #region 生命
     private void Start()
     {
-        battleRes = transform.Find("BattleRes").GetComponent<RectTransform>();
-        roomList = transform.Find("RoomList").GetComponent<RectTransform>();
-        roomLayout = transform.Find("RoomList/ScrollRect/Layout").GetComponent<VerticalLayoutGroup>();
+        battleRes = GetRect(transform.Find("LeftPin/BattleRes") );
+        roomList = GetRect( transform.Find("RightPin/RoomList") );
+        roomLayout = transform.Find("RightPin/RoomList/ScrollRect/Layout").GetComponent<VerticalLayoutGroup>();
         roomItemPrefab = Resources.Load("UIPanel/RoomItem") as GameObject;
 
-        AddBtnListener( transform.Find("RoomList/CloseButton"), OnCloseClick);
-        AddBtnListener(transform.Find("RoomList/CreateRoomButton"), OnCreateRoomClick);
-        AddBtnListener(transform.Find("RoomList/RefreshButton"), OnRefreshClick);
+        AddBtnListener( transform.Find( "RightPin/RoomList/CloseButton"), OnCloseClick);
+        AddBtnListener(transform.Find("RightPin/RoomList/CreateRoomButton"), OnCreateRoomClick);
+        AddBtnListener(transform.Find("RightPin/RoomList/RefreshButton"), OnRefreshClick);
 
         //
         listRoomRequest = GetOrAddComponent<ListRoomRequest>(gameObject);
@@ -157,11 +157,11 @@ public class RoomListPanel : BasePanel
     {
         gameObject.SetActive(true);
 
-        battleRes.localPosition = new Vector3(-1000, 0);
-        battleRes.DOLocalMoveX(-290, 0.5f);
+        battleRes.localPosition = new Vector3(-1000, 0);//初始
+        battleRes.DOLocalMoveX(300, 0.5f);//移动
 
         roomList.localPosition = new Vector3(1000, 0);
-        roomList.DOLocalMoveX(171, 0.5f);
+        roomList.DOLocalMoveX(-450, 0.5f);
     }
     private void HideAnim()
     {
@@ -178,9 +178,9 @@ public class RoomListPanel : BasePanel
     private void SetBattleRes()
     {
         UserData ud = facade.GetUserData();
-        SetText(transform.Find("BattleRes/Username"), ud.Username);
-        SetText(transform.Find("BattleRes/TotalCount"), "总场数:" + ud.TotalCount.ToString());
-        SetText(transform.Find("BattleRes/WinCount"), "胜利:" + ud.WinCount.ToString());
+        SetText( transform.Find("LeftPin/BattleRes/Username"), ud.Username);
+        SetText( transform.Find("LeftPin/BattleRes/TotalCount"), "总场数:" + ud.TotalCount.ToString());
+        SetText( transform.Find("LeftPin/BattleRes/WinCount"), "胜利:" + ud.WinCount.ToString());
     }
 
 
@@ -221,17 +221,21 @@ public class RoomListPanel : BasePanel
     void ShowRoomItem(UserData ud)
     {
         GameObject roomItem = GameObject.Instantiate(roomItemPrefab);
-        roomItem.transform.SetParent(roomLayout.transform);
+        SetParent(roomItem,roomLayout.gameObject);
         roomItem.GetComponent<RoomItem>().SetRoomInfo(ud.Id, ud.Username, ud.TotalCount, ud.WinCount, this);
+        GetRect(roomItem).localScale = Vector2.one;
+      //  float x = (1.0f * Constants.ScreenStandardWidth / Constants.ScreenStandardHeight) * GetRect(roomItem).sizeDelta.y;
+
+      //GetRect( roomItem ).sizeDelta= new Vector2(x, GetRect(roomItem).sizeDelta.y) ;
     }
 
 
     void AdaptRoomListLength()
     {
         int roomCount = GetComponentsInChildren<RoomItem>().Length;
-        Vector2 size = roomLayout.GetComponent<RectTransform>().sizeDelta;
-        roomLayout.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x,
-            roomCount * (roomItemPrefab.GetComponent<RectTransform>().sizeDelta.y + roomLayout.spacing));
+        Vector2 size = GetRect(roomLayout).sizeDelta;
+        GetRect( roomLayout ).sizeDelta = new Vector2(size.x,
+            roomCount * (GetRect( roomItemPrefab ).sizeDelta.y + roomLayout.spacing));
     }
 
     #region Response

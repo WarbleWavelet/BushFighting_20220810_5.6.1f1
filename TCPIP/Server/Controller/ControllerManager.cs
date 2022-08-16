@@ -28,6 +28,14 @@ namespace GameServer.Controller
             controllerDict.Add(ReqCode.Game, new GameController());
         }
 
+
+        /// <summary>
+        /// 处理请求
+        /// </summary>
+        /// <param name="requestCode"></param>
+        /// <param name="actionCode"></param>
+        /// <param name="data"></param>
+        /// <param name="client"></param>
         public void HandleRequest(ReqCode requestCode, ActionCode actionCode, string data, Client client)
         {
             BaseController controller;
