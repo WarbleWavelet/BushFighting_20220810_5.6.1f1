@@ -98,5 +98,12 @@
       <FileName>Assets\Scripts\Player\PlayerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="CameraMgr" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAACAAAAAAAAAQIAAAASAAAAAAhAAABA=</HashCode>
+      <FileName>Assets\Scripts\Mgr\CameraMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
 </ClassDiagram>

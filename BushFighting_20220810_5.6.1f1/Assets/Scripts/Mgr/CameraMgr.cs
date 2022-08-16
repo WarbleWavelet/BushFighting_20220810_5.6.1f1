@@ -3,60 +3,83 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CameraMgr : BaseManager {
+public class CameraMgr : BaseManager
+{
 
+    #region 字属构造
     private GameObject cameraGo;
     private Animator cameraAnim;
     private FollowTarget followTarget;
     private Vector3 originalPosition;
     private Vector3 originalRotation;
 
-    public CameraMgr(GameFacade facade) : base(facade) { }
+    bool getKeyCodeRetuen = false;
+    bool getKeyCodeEsc = false;
 
-    public override void OnInit()
+    public CameraMgr(GameFacade facade) : base(facade) { }
+    #endregion
+
+
+    #region 生命
+   public override void OnInit()
     {
-        cameraGo = Camera.main.gameObject;
+        getKeyCodeRetuen = false;
+        getKeyCodeEsc = false;
+        cameraGo = Camera.main.gameObject;  
         cameraAnim = cameraGo.GetComponent<Animator>();
-       // followTarget = cameraGo.GetComponent<FollowTarget>();
+        followTarget = cameraGo.GetComponent<FollowTarget>();
+    
     }
 
-    //public override void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        FollowTarget(null);
-    //    }
-    //    if (Input.GetMouseButtonDown(1))
-    //    {
-    //        WalkthroughScene(); 
-    //    }
-    //}
+    public override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && getKeyCodeRetuen == false && getKeyCodeEsc==false) ///回车
+        {
+            getKeyCodeRetuen = true;
+              FollowRole();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && getKeyCodeRetuen==false && getKeyCodeEsc == false) //Esc
+        {
+            getKeyCodeEsc = true;
+              WalkthroughScene();
+        }
+
+
+    }
+    #endregion
+
 
     /// <summary>
     /// 相机跟随主角
     /// </summary>
     public void FollowRole()
     {
-       // return;
-        followTarget.target = facade.GetCurrentRoleGameObject().transform;
-        cameraAnim.enabled = false;         
+          cameraAnim.enabled = false;         
+        //followTarget.target = facade.GetCurrentRoleGameObject().transform;
+        followTarget.target = GameObject.FindWithTag(Tags.Player).transform;
+      
         originalPosition = cameraGo.transform.position;
         originalRotation = cameraGo.transform.eulerAngles;
 
-        Quaternion targetQuaternion = Quaternion.LookRotation(followTarget.target.position - cameraGo.transform.position);
-        cameraGo.transform.DORotateQuaternion(targetQuaternion, 1f).OnComplete(delegate()
+        Quaternion targetQuaternion = Quaternion.LookRotation(followTarget.target.position - cameraGo.transform.position);  //看向玩家
+        cameraGo.transform.DORotateQuaternion(targetQuaternion, 1f).OnComplete(delegate()                                   //移动到玩家附近
         {
             followTarget.enabled = true;
+            getKeyCodeRetuen = false;
         });
     }
+
+    /// <summary>
+    /// 相机漫游场景
+    /// </summary>
     public void WalkthroughScene()
     {
-        return;
         followTarget.enabled = false;
-        cameraGo.transform.DOMove(originalPosition, 1f);
-        cameraGo.transform.DORotate(originalRotation, 1f).OnComplete( delegate()
+        cameraGo.transform.DOMove(originalPosition, 1f); //镜头拉远
+        cameraGo.transform.DORotate(originalRotation, 1f).OnComplete( delegate()  //镜头摆正还原
         {
             cameraAnim.enabled = true;
+            getKeyCodeEsc = false;
         });
     }
 }
