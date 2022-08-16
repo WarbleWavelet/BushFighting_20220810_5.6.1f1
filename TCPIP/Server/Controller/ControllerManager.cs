@@ -11,7 +11,7 @@ namespace GameServer.Controller
 
     class ControllerManager
     {
-        private Dictionary<ReqCode, BaseController> controllerDict = new Dictionary<ReqCode, BaseController>();
+        private Dictionary<ReqCode, BaseController> controllerDic = new Dictionary<ReqCode, BaseController>();
         private Server server;
 
         public ControllerManager(Server server) {
@@ -22,10 +22,10 @@ namespace GameServer.Controller
         void InitController()
         {
             DefaultController defaultController = new DefaultController();
-            controllerDict.Add(defaultController.RequestCode, defaultController);
-            controllerDict.Add(ReqCode.User, new UserController());
-            controllerDict.Add(ReqCode.Room, new RoomController());
-            controllerDict.Add(ReqCode.Game, new GameController());
+            controllerDic.Add(defaultController.RequestCode, defaultController);
+            controllerDic.Add(ReqCode.User, new UserController());
+            controllerDic.Add(ReqCode.Room, new RoomController());
+            controllerDic.Add(ReqCode.Game, new GameController());
         }
 
 
@@ -39,7 +39,7 @@ namespace GameServer.Controller
         public void HandleRequest(ReqCode requestCode, ActionCode actionCode, string data, Client client)
         {
             BaseController controller;
-            bool isGet = controllerDict.TryGetValue(requestCode, out controller);
+            bool isGet = controllerDic.TryGetValue(requestCode, out controller);
             if (isGet == false)
             {
                 Console.WriteLine("无法得到[" + requestCode + "]所对应的Controller,无法处理请求");

@@ -143,7 +143,7 @@ namespace GameServer.Servers
         /// <param name="client"></param>
         public void QuitRoom(Client client)
         {
-            if (client == clientLst[0])//房主嘉会解散房间
+            if (client.IsHouseOwner())//房主嘉会解散房间
             {
                 Close();
             }
@@ -155,6 +155,9 @@ namespace GameServer.Servers
         }
 
 
+        /// <summary>
+        /// 解散房间
+        /// </summary>
         public void Close()
         {
             foreach(Client client in clientLst) //赶人
@@ -165,7 +168,10 @@ namespace GameServer.Servers
         }
 
 
-        public void StartTimer()
+
+
+        #region 战斗
+  public void StartTimer()
         {
             new Thread(RunTimer).Start();
         }
@@ -215,5 +221,7 @@ namespace GameServer.Servers
             }
             Close();
         }
+        #endregion
+      
     }
 }

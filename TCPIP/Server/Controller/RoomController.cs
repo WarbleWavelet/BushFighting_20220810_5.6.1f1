@@ -54,17 +54,19 @@ namespace GameServer.Controller
         {
             bool isHouseOwner = client.IsHouseOwner();
             Room room = client.Room;
+
+            string successStr = ((int)ReturnCode.Success).ToString();
             if (isHouseOwner)
             {
-                room.BroadcastMessage(client, ActionCode.QuitRoom, ((int)ReturnCode.Success).ToString());
+                room.BroadcastMessage(client, ActionCode.QuitRoom, successStr);
                 room.Close();
-                return ((int)ReturnCode.Success).ToString();
+                return successStr;
             }
             else
             {
                 client.Room.RemoveClient(client);
                 room.BroadcastMessage(client, ActionCode.UpdateRoom, room.GetRoomData());
-                return ((int)ReturnCode.Success).ToString();
+                return successStr;
             }
         }
 
