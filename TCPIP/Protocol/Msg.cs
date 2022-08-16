@@ -195,4 +195,7 @@ namespace Protocol
         Fail,
         NotFound //没找到
     }
+
+
+
 }

@@ -156,11 +156,13 @@ public class UIMgr: BaseManager
             //panelPathDict.TryGetValue(panelType, out path);
             string path = panelPathDict.TryGet(panelType);
             GameObject instPanel = GameObject.Instantiate(Resources.Load(path)) as GameObject;
+            panel = instPanel.GetComponent<BasePanel>();
+
             instPanel.transform.SetParent(CanvasTransform,false);
-            instPanel.GetComponent<BasePanel>().UIMng = this;
-            instPanel.GetComponent<BasePanel>().Facade = facade;
-            panelDict.Add(panelType, instPanel.GetComponent<BasePanel>());
-            return instPanel.GetComponent<BasePanel>();
+            panel.UIMng = this;
+            panel.Facade = facade;
+            panelDict.Add(panelType, panel);
+            return panel;
         }
         else
         {

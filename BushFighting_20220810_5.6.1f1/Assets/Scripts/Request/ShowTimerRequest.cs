@@ -16,6 +16,6 @@ public class ShowTimerRequest : BaseRequest {
     public override void OnResponse(string data)
     {
         int time = int.Parse(data);
-        gamePanel.ShowTimeSync(time);
+        gamePanel.ShowTimeAsync(time);
     }
 }

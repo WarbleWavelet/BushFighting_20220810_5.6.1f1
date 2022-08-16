@@ -65,9 +65,10 @@
     <Compile Include="Tool\ConnHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="02 开始游戏.cd" />
     <None Include="App.config" />
-    <None Include="Server.cd" />
-    <None Include="房间.cd" />
+    <None Include="00 Server.cd" />
+    <None Include="01 房间.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

@@ -41,7 +41,7 @@ public class GameFacade : MonoBehaviour
     private RequestMgr requestMgr;
     private ClientMgr clientMgr;
 
-    private bool isEnterPlaying = false;
+    private bool isEnterPlaying = false; //从开始游戏进入开始战斗的标志
 
 
 
@@ -71,8 +71,9 @@ public class GameFacade : MonoBehaviour
 	void Update () 
     {
         UpdateManager();
-        if (isEnterPlaying)
+        if (isEnterPlaying)//从开始游戏进入开始战斗的计时
         {
+            return;
             EnterPlaying();
             isEnterPlaying = false;
         }
@@ -185,7 +186,7 @@ public class GameFacade : MonoBehaviour
     {
         audioMgr.PlayBGMusic(soundName);
     }
-    public void PlayUIAudio(string soundName)
+    public void PlayUIAudio(string soundName = DefinePath.Sound_Alert)
     {
         audioMgr.PlayUIAudio(soundName);
     }
@@ -214,10 +215,17 @@ public class GameFacade : MonoBehaviour
 
 
     #region 玩家
-  public void EnterPlayingSync()
+    /// <summary>
+    ///  从开始游戏进入开始战斗的任务转移，跑在主线程的Update
+    /// </summary>
+    public void EnterPlayingSync()
     {
         isEnterPlaying = true;
     }
+
+    /// <summary>
+    /// 从开始游戏进入开始战斗的过程
+    /// </summary>
     private void EnterPlaying()
     {
         playerMgr.SpawnRoles();

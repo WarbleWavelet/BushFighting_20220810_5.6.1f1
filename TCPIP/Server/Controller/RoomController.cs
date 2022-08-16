@@ -40,6 +40,7 @@ namespace GameServer.Controller
         {
             server.CreateRoom(client);
             return ((int)ReturnCode.Success).ToString()+","+ ((int)RoleType.Home).ToString();
+
         }
 
 

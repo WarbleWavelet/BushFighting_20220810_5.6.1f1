@@ -83,6 +83,10 @@ public class BasePanel : MonoBehaviour
     public virtual void SetActive(Button obj, bool state = true)
     {
         obj.gameObject.SetActive(state);
+    }       
+    public virtual void SetActive(Text obj, bool state = true)
+    {
+        obj.gameObject.SetActive(state);
     }
     #endregion
     protected T GetOrAddComponent<T>(GameObject go) where T : Component
@@ -128,8 +132,19 @@ public class BasePanel : MonoBehaviour
         }
         else
         {
-
-
+            Debug.LogErrorFormat("组件{0}没有Button组件", t.gameObject.name);
+        }
+    }      
+    
+    protected void SetAndAddBtnListener(ref  Button btn, Transform t, UnityEngine.Events.UnityAction action)
+    {
+         btn = t.GetComponent<Button>();
+        if (btn != null)
+        {
+            btn.onClick.AddListener(action);
+        }
+        else
+        {
             Debug.LogErrorFormat("组件{0}没有Button组件", t.gameObject.name);
         }
     }

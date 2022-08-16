@@ -17,6 +17,7 @@ public class StartPlayRequest : BaseRequest {
     {
         if (isStartPlaying)
         {
+            return;
             facade.StartPlaying();
             isStartPlaying = false;
         }

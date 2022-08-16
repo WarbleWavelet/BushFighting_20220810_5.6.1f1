@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="从左到右，从上到下">
+    <Position X="0.5" Y="0.809" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="GameServer.Servers.Room" Collapsed="true">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KCAAAAAAAAAAAAAAAAQIAEAAIQAAAAAEBAACggKgAAI=</HashCode>
+      <FileName>Servers\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Controller.RoomController" Collapsed="true">
+    <Position X="4.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAAAAACAEAA=</HashCode>
+      <FileName>Controller\RoomController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Servers.Client" Collapsed="true">
+    <Position X="2.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAGAAAACAAAAAABlAAABQQcACAAAACBBQAoACgAQI=</HashCode>
+      <FileName>Servers\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer.Servers.Server" Collapsed="true">
+    <Position X="4.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIAACAAAABAAIAAAAIAACAAAAAABAAAMAAAEAI=</HashCode>
+      <FileName>Servers\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GameServer.Servers.RoomState" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAACAAIgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Servers\Room.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

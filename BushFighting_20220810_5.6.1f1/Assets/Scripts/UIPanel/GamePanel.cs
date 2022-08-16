@@ -11,9 +11,14 @@ public class GamePanel : BasePanel
     #region 字属构造
     private Text timer;
     private int time = -1;
+
     private Button successBtn;
     private Button failBtn;
     private Button exitBtn;
+
+    ShowTimerRequest showTimerRequest;
+    StartPlayRequest startPlayRequest;
+    GameOverRequest gameOverRequest;
 
     private QuitBattleRequest quitBattleRequest;
     #endregion
@@ -23,35 +28,25 @@ public class GamePanel : BasePanel
     #region 生命
     private void Start()
     {
-        timer = transform.Find("Timer").GetComponent<Text>();
-        timer.gameObject.SetActive(false);
-        successBtn = transform.Find("SuccessButton").GetComponent<Button>();
-        successBtn.onClick.AddListener(OnResultClick);
-        successBtn.gameObject.SetActive(false);
-        failBtn = transform.Find("FailButton").GetComponent<Button>();
-        failBtn.onClick.AddListener(OnResultClick);
-        failBtn.gameObject.SetActive(false);
-        exitBtn = transform.Find("ExitButton").GetComponent<Button>();
-        exitBtn.onClick.AddListener(OnExitClick);
-        exitBtn.gameObject.SetActive(false);
+        timer = GetOrAddComponent<Text>( transform.Find("Timer").gameObject );
+         SetActive(timer,false);
 
-         //
-        GetOrAddComponent<ShowTimerRequest>(gameObject);
-        GetOrAddComponent<StartPlayRequest>(gameObject);
-        GetOrAddComponent<GameOverRequest>(gameObject);
+
+        SetAndAddBtnListener(ref  successBtn, transform.Find("SuccessButton"), OnResultClick);
+        SetActive(successBtn, false);
+
+        SetAndAddBtnListener(ref failBtn, transform.Find("FailButton"), OnResultClick);
+        SetActive(failBtn, false);
+
+        SetAndAddBtnListener(ref exitBtn, transform.Find("ExitButton"), OnExitClick);
+        SetActive(exitBtn, false);
+
+        //
+        showTimerRequest = GetOrAddComponent<ShowTimerRequest>(gameObject);
+        startPlayRequest = GetOrAddComponent<StartPlayRequest>(gameObject);
+        gameOverRequest = GetOrAddComponent<GameOverRequest>(gameObject);
         quitBattleRequest = GetOrAddComponent<QuitBattleRequest>(gameObject);
 
-    }
-    public override void OnEnter()
-    {
-        gameObject.SetActive(true);
-    }
-    public override void OnExit()
-    {
-        successBtn.gameObject.SetActive(false);
-        failBtn.gameObject.SetActive(false);
-        exitBtn.gameObject.SetActive(false);
-        gameObject.SetActive(false);
     }
     private void Update()
     {
@@ -61,6 +56,19 @@ public class GamePanel : BasePanel
             time = -1;
         }
     }
+
+    public override void OnEnter()
+    {
+        gameObject.SetActive(true);
+    }
+    public override void OnExit()
+    {
+       SetActive(successBtn,false);
+       SetActive(failBtn,false);
+       SetActive(exitBtn,false);
+        gameObject.SetActive(false);
+    }
+
     #endregion
 
     private void OnResultClick()
@@ -77,25 +85,32 @@ public class GamePanel : BasePanel
     {
         OnResultClick();
     }
-    public void ShowTimeSync(int time)
+    public void ShowTimeAsync(int time)
     {
         this.time = time;
     }
+
+
+    /// <summary>
+    /// 计时UI
+    /// </summary>
+    /// <param name="time"></param>
     public void ShowTime(int time)
     {
         if (time == 3)
         {
-            exitBtn.gameObject.SetActive(true);
+            SetActive(exitBtn,true);
         }
-        timer.gameObject.SetActive(true);
+        SetActive(timer,true);
         timer.text = time.ToString();
         timer.transform.localScale = Vector3.one;
         Color tempColor = timer.color;
         tempColor.a = 1;
         timer.color = tempColor;
+        //
         timer.transform.DOScale(2, 0.3f).SetDelay(0.3f);
-        timer.DOFade(0, 0.3f).SetDelay(0.3f).OnComplete(() => timer.gameObject.SetActive(false));
-        facade.PlayUIAudio(AudioMgr.Sound_Alert);
+        timer.DOFade(0, 0.3f).SetDelay(0.3f).OnComplete(() => SetActive(timer, false));
+        facade.PlayUIAudio();
     }
     public void OnGameOverResponse(ReturnCode returnCode)
     {

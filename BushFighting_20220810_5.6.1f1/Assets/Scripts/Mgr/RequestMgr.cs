@@ -6,18 +6,18 @@ public class RequestMgr : BaseManager
 {
     public RequestMgr(GameFacade facade) : base(facade) { }
 
-    private Dictionary<ActionCode, BaseRequest> requestDict = new Dictionary<ActionCode, BaseRequest>();
+    private Dictionary<ActionCode, BaseRequest> requestDic = new Dictionary<ActionCode, BaseRequest>();
 
 
 
     #region Request增删处理
   public void AddRequest(ActionCode actionCode,BaseRequest request)
     {
-        requestDict.Add(actionCode, request);
+        requestDic.Add(actionCode, request);
     }
     public void RemoveRequest(ActionCode actionCode)
     {
-        requestDict.Remove(actionCode);
+        requestDic.Remove(actionCode);
     }
 
     /// <summary>
@@ -27,10 +27,11 @@ public class RequestMgr : BaseManager
     /// <param name="data"></param>
     public void HandleReponse(ActionCode actionCode, string data)
     {
-        BaseRequest request = requestDict.TryGet<ActionCode, BaseRequest>(actionCode);
+        BaseRequest request = requestDic.TryGet<ActionCode, BaseRequest>(actionCode);
         if (request == null)
         {
-            Debug.LogWarning("无法得到ActionCode[" + actionCode + "]对应的Request类");return;
+            Debug.LogError("无法得到ActionCode[" + actionCode + "]对应的Request类");
+            return;
         }
         request.OnResponse(data);
     }

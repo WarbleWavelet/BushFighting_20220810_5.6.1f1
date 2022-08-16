@@ -171,22 +171,32 @@ namespace GameServer.Servers
 
 
         #region 战斗
-  public void StartTimer()
+
+
+        #region 计时
+        /// <summary>
+        /// 开始计时线程
+        /// </summary>
+        public void StartTimer()
         {
             new Thread(RunTimer).Start();
         }
 
-
+        /// <summary>
+        /// 运行计时
+        /// </summary>
         private void RunTimer()
         {
-            Thread.Sleep(1000);
-            for (int i = 3; i > 0; i--)
+            Thread.Sleep(1000);//1000ms==1秒
+            for (int i = 3; i > 0; i--)//3秒
             {
                 BroadcastMessage(null, ActionCode.ShowTimer, i.ToString());
                 Thread.Sleep(1000);
             }
             BroadcastMessage(null, ActionCode.StartPlay, "r");
         }
+        #endregion
+
 
 
         public void TakeDamage(int damage,Client excludeClient)

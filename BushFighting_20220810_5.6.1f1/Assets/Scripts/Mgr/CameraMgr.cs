@@ -32,10 +32,14 @@ public class CameraMgr : BaseManager {
     //    }
     //}
 
+    /// <summary>
+    /// 相机跟随主角
+    /// </summary>
     public void FollowRole()
     {
+       // return;
         followTarget.target = facade.GetCurrentRoleGameObject().transform;
-        cameraAnim.enabled = false;
+        cameraAnim.enabled = false;         
         originalPosition = cameraGo.transform.position;
         originalRotation = cameraGo.transform.eulerAngles;
 
@@ -47,6 +51,7 @@ public class CameraMgr : BaseManager {
     }
     public void WalkthroughScene()
     {
+        return;
         followTarget.enabled = false;
         cameraGo.transform.DOMove(originalPosition, 1f);
         cameraGo.transform.DORotate(originalRotation, 1f).OnComplete( delegate()

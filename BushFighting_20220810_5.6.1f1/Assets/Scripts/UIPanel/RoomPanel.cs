@@ -37,7 +37,7 @@ public class RoomPanel : BasePanel
 
     private QuitRoomRequest quitRoomRequest;
     private StartGameRequest startGameRequest;
-    UpdateRoomRequest updateRoomRequest;
+    private UpdateRoomRequest updateRoomRequest;
 
     private bool isPopPanel = false; //异步改这个值，主线程中收起UI
     #endregion
@@ -201,31 +201,25 @@ public class RoomPanel : BasePanel
         awayPlayerTotalCount.text = "等待玩家加入....";
         awayPlayerWinCount.text = "";
     }
-    #endregion  
-   
+    #endregion
 
 
 
-    #region Click
-  private void OnStartClick()
+
+    #region Click与回复
+    /// <summary>
+    /// 点击开始游戏
+    /// </summary>
+    private void OnStartClick()
     {
         startGameRequest.SendRequest();
     }
 
-    private void OnExitClick()
-    {
-        quitRoomRequest.SendRequest();
-    }
-    #endregion
 
-  
-
-    public void OnExitResponse()
-    {
-        isPopPanel = true;
-    }
-
-
+    /// <summary>
+    /// 开始游戏回复
+    /// </summary>
+    /// <param name="returnCode"></param>
     public void OnStartResponse(ReturnCode returnCode)
     {
         if (returnCode == ReturnCode.Fail)
@@ -238,6 +232,26 @@ public class RoomPanel : BasePanel
             facade.EnterPlayingSync();
         }
     }
+
+
+
+    private void OnExitClick()
+    {
+        quitRoomRequest.SendRequest();
+    }
+
+    public void OnExitResponse()
+    {
+        isPopPanel = true;
+    }
+    #endregion
+
+  
+
+
+
+
+
 
     private void EnterAnim()
     {

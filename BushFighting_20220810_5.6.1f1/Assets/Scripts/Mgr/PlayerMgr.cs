@@ -10,7 +10,7 @@ public class PlayerMgr : BaseManager
  public PlayerMgr(GameFacade facade) : base(facade) { }
 
     private UserData userData;
-    private Dictionary<RoleType, RoleData> roleDataDict = new Dictionary<RoleType, RoleData>();
+    private Dictionary<RoleType, RoleData> roleDataDic = new Dictionary<RoleType, RoleData>();
     private Transform rolePositions;
 
     private RoleType currentRoleType;
@@ -44,12 +44,16 @@ public class PlayerMgr : BaseManager
     }
     private void InitRoleDataDict()
     {
-        roleDataDict.Add(RoleType.Away, new RoleData(RoleType.Away, "Hunter_BLUE", "Arrow_BLUE", "Explosion_BLUE",rolePositions.Find("Position1")));
-        roleDataDict.Add(RoleType.Home, new RoleData(RoleType.Home, "Hunter_RED", "Arrow_RED", "Explosion_RED", rolePositions.Find("Position2")));
+        roleDataDic.Add(RoleType.Home, new RoleData(RoleType.Home, "Hunter_BLUE", "Arrow_BLUE", "Explosion_BLUE",rolePositions.Find("Position1")));
+        roleDataDic.Add(RoleType.Away, new RoleData(RoleType.Away, "Hunter_RED", "Arrow_RED", "Explosion_RED", rolePositions.Find("Position2")));
     }
+
+    /// <summary>
+    /// 生成主角
+    /// </summary>
     public void SpawnRoles()
     {
-        foreach(RoleData rd in roleDataDict.Values)
+        foreach(RoleData rd in roleDataDic.Values)
         {
             GameObject go= GameObject.Instantiate(rd.RolePrefab, rd.SpawnPosition, Quaternion.identity);
             go.tag = Tags.Player;
@@ -71,7 +75,7 @@ public class PlayerMgr : BaseManager
     private RoleData GetRoleData(RoleType rt)
     {
         RoleData rd = null;
-        roleDataDict.TryGetValue(rt, out rd);
+        roleDataDic.TryGetValue(rt, out rd);
         return rd;
     }
     public void AddControlScript()
