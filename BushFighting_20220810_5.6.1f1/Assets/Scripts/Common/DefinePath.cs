@@ -26,6 +26,7 @@ public class DefinePath
     public const string Sound_Miss = "Miss";
     public const string Sound_ShootPerson = "ShootPerson";
     public const string Sound_Timer = "Timer";
+    public const string Prefab_Role_Prefix = "Prefabs/";
     #endregion
 
 }

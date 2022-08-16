@@ -13,27 +13,30 @@ using UnityEngine;
 using Protocol;
 using System;
 
-public class GameFacade : MonoBehaviour 
+
+namespace Test
+{
+public class GameFacade_Test : GameFacade 
 {
 
 
     #region 字属
     #region 单例
     private static GameFacade _instance;
-    public static GameFacade Instance
+    public new  static GameFacade Instance
     {
         get
         {
             if ( _instance == null)
             {
-                _instance = GameObject.Find("GameFacade").GetComponent<GameFacade>();
+                _instance = GameObject.Find("GameFacade").GetComponent<GameFacade_Test>();
             }
             return _instance;
         }
     }
     #endregion
 
-    public bool test;
+
     private UIMgr uiMgr;
     private AudioMgr audioMgr;
     private PlayerMgr playerMgr;
@@ -65,6 +68,7 @@ public class GameFacade : MonoBehaviour
 
     void Start ()
     {
+            isEnterPlaying = true;
         InitManager();
 	}
 	
@@ -73,7 +77,7 @@ public class GameFacade : MonoBehaviour
         UpdateManager();
         if (isEnterPlaying)//从开始游戏进入开始战斗的计时
         {
-            return;
+            
             EnterPlaying();
             isEnterPlaying = false;
         }
@@ -90,38 +94,32 @@ public class GameFacade : MonoBehaviour
     #region Mgr 生命
   private void InitManager()
     {
-        uiMgr = new UIMgr(this);
         audioMgr = new AudioMgr(this);
         playerMgr = new PlayerMgr(this);
         cameraMgr = new CameraMgr(this);
-        requestMgr = new RequestMgr(this);
-        clientMgr = new ClientMgr(this);
 
-        uiMgr.OnInit();
+
         audioMgr.OnInit();
         playerMgr.OnInit();
         cameraMgr.OnInit();
-        requestMgr.OnInit();
-        clientMgr.OnInit();
+
     }
     private void UpdateManager()
     {
-        uiMgr.Update();
+
         audioMgr.Update();
         playerMgr.Update();
         cameraMgr.Update();
-        requestMgr.Update();
-        clientMgr.Update();
+
     }
 
     private void DestroyManager()
     {
-        uiMgr.OnDestroy();
+
         audioMgr.OnDestroy();
         playerMgr.OnDestroy();
         cameraMgr.OnDestroy();
-        requestMgr.OnDestroy();
-        clientMgr.OnDestroy();
+
     }
     #endregion
 
@@ -252,5 +250,7 @@ public class GameFacade : MonoBehaviour
         playerMgr.UpdateResult(totalCount, winCount);
     }
 
+
+}
 
 }

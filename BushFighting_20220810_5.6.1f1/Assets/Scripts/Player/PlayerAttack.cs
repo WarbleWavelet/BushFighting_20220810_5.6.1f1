@@ -21,7 +21,7 @@ public class PlayerAttack : MonoBehaviour
     private Animator anim;
     private Transform leftHandTrans;
     private Vector3 shootDir;
-    private PlayerMgr playerMng;
+    private PlayerMgr playerMgr;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))//点击地面
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -45,17 +45,24 @@ public class PlayerAttack : MonoBehaviour
                     shootDir = targetPoint - transform.position;
                     transform.rotation = Quaternion.LookRotation(shootDir);
                     anim.SetTrigger("Attack");
-                    Invoke("Shoot", 0.1f);
+                    //Invoke("Shoot", 0.1f);
+                    Invoke("ShootTest", 0.1f);
                 }
             }
         }
 	}
     public void SetPlayerMng(PlayerMgr playerMng)
     {
-        this.playerMng = playerMng;
+        this.playerMgr = playerMng;
     }
     private void Shoot()
     {
-        playerMng.Shoot(arrowPrefab, leftHandTrans.position, Quaternion.LookRotation(shootDir));
+        playerMgr.Shoot(arrowPrefab, leftHandTrans.position, Quaternion.LookRotation(shootDir));
+    }
+
+    void ShootTest()
+    {
+       // facade.PlayUIAudio(AudioMgr.Sound_Timer);
+        GameObject.Instantiate(arrowPrefab, leftHandTrans.position, Quaternion.LookRotation(shootDir)).GetComponent<Arrow>().isLocal = true;
     }
 }

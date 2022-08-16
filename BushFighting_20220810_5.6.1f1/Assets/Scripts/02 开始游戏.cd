@@ -1,66 +1,101 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="StartPlayRequest" Collapsed="true">
-    <Position X="3.5" Y="2.75" Width="2" />
+    <Position X="3.5" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAQAAAEAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Request\StartPlayRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GamePanel" Collapsed="true">
-    <Position X="3" Y="1.25" Width="1.5" />
+    <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAwBAAAAASAAACAQAoAAAAgAABAQACAAAIsACAAAAAA=</HashCode>
       <FileName>Assets\Scripts\UIPanel\GamePanel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ShowTimerRequest" Collapsed="true">
-    <Position X="3.5" Y="2" Width="2" />
+    <Position X="3.5" Y="2.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Request\ShowTimerRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameOverRequest" Collapsed="true">
-    <Position X="3.5" Y="3.5" Width="2" />
+    <Position X="3.5" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAwAAAAAAEAAAAAAAAAIAACAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Request\GameOverRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RoomPanel" Collapsed="true">
-    <Position X="0.5" Y="1.25" Width="1.5" />
+    <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BkQAAAQGQSAAAAgQoQAAAAgAEKAQACAAQowAAhAgICo=</HashCode>
       <FileName>Assets\Scripts\UIPanel\RoomPanel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="StartGameRequest" Collapsed="true">
-    <Position X="1" Y="2" Width="1.75" />
+    <Position X="1" Y="2.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAIAACAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Request\StartGameRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UIMgr" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
+    <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAIQAAABAAEAAAACEAEAAoQBAQAAQAAoABhAAAAQA=</HashCode>
       <FileName>Assets\Scripts\Mgr\UIMgr.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MoveRequest" Collapsed="true">
-    <Position X="5.75" Y="2" Width="1.5" />
+    <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAhAAAiAAAAgAAACIAMCEAAAAAQAAAAAAQAICQEA=</HashCode>
       <FileName>Assets\Scripts\Request\MoveRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerMgr" Collapsed="true">
-    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gCgAgAAAAAAABAkAABCAEAQCAEBACAUCAIBAAAEIAAA=</HashCode>
       <FileName>Assets\Scripts\Mgr\PlayerMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RoleData" Collapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAKAAAAAACAAAAAAIAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\RoleData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerMove" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAiAAAAAAAAAAAAAAAAAAAQAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\PlayerMove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerAttack" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAALAAAAAAAAAAAAAAAAAAAAUAACAAAAAM=</HashCode>
+      <FileName>Assets\Scripts\Player\PlayerAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Arrow" Collapsed="true">
+    <Position X="8.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIAAAACAAAAAAAgEAAAAAAAAAAQAAQAAAAAACAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Arrow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerInfo" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\PlayerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
