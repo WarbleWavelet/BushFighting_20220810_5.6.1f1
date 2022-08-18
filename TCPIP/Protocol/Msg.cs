@@ -168,11 +168,11 @@ namespace Protocol
         UpdateRoom,     //有玩家进出
         QuitRoom,
 
-        StartGame,
-        ShowTimer,
-        StartPlay,
-        Move,
-        Shoot,
+        StartGame,       //开始游戏
+        ShowTimer,       //更新倒计时
+        StartPlay,       //开始战斗
+        Move,            //人物移动
+        Shoot,           //射击
         Attack,
         GameOver,
         UpdateResult,
@@ -184,7 +184,7 @@ namespace Protocol
     /// </summary>
     public enum RoleType
     {
-        Home,//主
+        Home,//主，房主，能开启游戏，解散房间的那位
         Away     //客
     }
 

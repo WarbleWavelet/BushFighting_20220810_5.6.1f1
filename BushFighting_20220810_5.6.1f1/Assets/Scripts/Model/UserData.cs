@@ -1,4 +1,12 @@
-﻿using System;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/18 11:19:03
+	功能：用户信息
+
+*****************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +14,13 @@ using System.Text;
 
 public class UserData
 {
-
     #region 字属 构造
     public int Id { get; private set; }
     public string Username { get; private set; }
     public int TotalCount { get; set; }
     public int WinCount { get; set; }
 
-  public UserData(string userData)
+    public UserData(string userData)
     {
         string[] strs = userData.Split(',');
         this.Id = int.Parse(strs[0]);

@@ -3,7 +3,7 @@
    文件：
    作者：WWS
    日期：2022/8/15 13:20:34
-   功能：大佬
+   功能：单机测试角色移动攻击
 
 *****************************************************/
 
@@ -202,13 +202,13 @@ public class GameFacade_Test : GameFacade
     }
     #endregion  
    
-    public void SetCurrentRoleType(RoleType rt)
+    public void SetCurRoleType(RoleType rt)
     {
         playerMgr.SetCurrentRoleType(rt);
     }
-    public GameObject GetCurrentRoleGameObject()
+    public GameObject GetCurRoleGameObject()
     {
-        return playerMgr.GetCurrentRoleGameObject();
+        return playerMgr.GetCurRoleGameObject();
     }
 
 

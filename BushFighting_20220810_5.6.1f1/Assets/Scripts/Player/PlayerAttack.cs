@@ -12,11 +12,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour 
 {
-
-   
-
-   
-
     public GameObject arrowPrefab;
     private Animator anim;
     private Transform leftHandTrans;
@@ -51,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 	}
-    public void SetPlayerMng(PlayerMgr playerMng)
+    public void SetPlayerMgr(PlayerMgr playerMng)
     {
         this.playerMgr = playerMng;
     }

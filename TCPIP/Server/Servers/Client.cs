@@ -65,7 +65,9 @@ namespace GameServer.Servers
             clientSocket.BeginReceive(msg.Data, msg.StartIndex, msg.RemainSize, SocketFlags.None, ReceiveCallback, null);
         }
 
-
+         /// <summary>
+         /// 关闭Client
+         /// </summary>
         private void Close()
         {
             ConnHelper.CloseConnection(mysqlConn);
@@ -74,7 +76,7 @@ namespace GameServer.Servers
                   clientSocket.Close();
             }
               
-            if (room != null) //有房退房
+            if (room != null) //有房退房，房主散房
             {
                 room.QuitRoom(this);
             }

@@ -1,11 +1,21 @@
-﻿using System.Collections;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/18 11:13:00
+	功能：注册
+
+*****************************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
 
-public class RegisterRequest : BaseRequest//注册 
+public class RegisterRequest : BaseRequest 
 {
 
+   
     private RegisterPanel registerPanel;
 
     public override void Awake()

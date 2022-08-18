@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/18 11:13:26
+	功能： 退出房间
+
+*****************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
@@ -6,6 +14,7 @@ using Protocol;
 public class QuitRoomRequest : BaseRequest
 {
 
+   
 
     private RoomPanel roomPanel;
     public override void Awake()

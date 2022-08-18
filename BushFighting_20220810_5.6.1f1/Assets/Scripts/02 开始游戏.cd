@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GameOverRequest" Collapsed="true">
-    <Position X="3.5" Y="4" Width="2" />
+    <Position X="3.5" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAwAAAAAAEAAAAAAAAAIAACAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Request\GameOverRequest.cs</FileName>
@@ -52,14 +52,14 @@
   <Class Name="MoveRequest" Collapsed="true">
     <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAhAAAiAAAAgAAACIAMCEAAAAAQAAAAAAQAICQEA=</HashCode>
+      <HashCode>CAAAABAAAiAAAAAAAAAIAECEAIAAAAAAAAQAQAYCoEA=</HashCode>
       <FileName>Assets\Scripts\Request\MoveRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerMgr" Collapsed="true">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gCgAgAAAAAAABAkAABCAEAQCAEBACAUCAIBAAAEIAAA=</HashCode>
+      <HashCode>gCgAigAAAAAQBAEAABKAEAQAAEAACAUAAABAAAEIAAE=</HashCode>
       <FileName>Assets\Scripts\Mgr\PlayerMgr.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,7 +80,7 @@
   <Class Name="PlayerAttack" Collapsed="true">
     <Position X="8.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAACAALAAAAAAAAAAAAAAAAAAAAUAACAAAAAM=</HashCode>
+      <HashCode>AAQAAAAAACAAJAAAAAAAAQAAAAAAAAAAAUAACAAAAAM=</HashCode>
       <FileName>Assets\Scripts\Player\PlayerAttack.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -101,8 +101,29 @@
   <Class Name="CameraMgr" Collapsed="true">
     <Position X="9.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAACAAAAAAAAAQIAAAASAAAAAAhAAABA=</HashCode>
+      <HashCode>AAQAAAAAACAAAACAAAAAAAAAQIAAAASAAAAAAhACABA=</HashCode>
       <FileName>Assets\Scripts\Mgr\CameraMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AttackRequest" Collapsed="true">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Request\AttackRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShootRequest" Collapsed="true">
+    <Position X="10" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAAAAAAAAAAAACIAICAAAAAABAAAAAAAAAAAEE=</HashCode>
+      <FileName>Assets\Scripts\Request\ShootRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuitBattleRequest" Collapsed="true">
+    <Position X="3.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAAAAAAAAAIAACAAAAAAAAAAACAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Request\QuitBattleRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />

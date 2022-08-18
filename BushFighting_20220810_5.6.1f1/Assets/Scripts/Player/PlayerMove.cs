@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour {
+public class PlayerMove : MonoBehaviour 
+{
 
     public float forward = 0;
 
@@ -10,14 +11,17 @@ public class PlayerMove : MonoBehaviour {
     private Animator anim;
 
 
-	void Start () 
+
+    #region 生命
+ void Start () 
     {
         anim = GetComponent<Animator>();
 	}
 
 
-	void FixedUpdate () {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Grounded") == false)
+	void FixedUpdate () 
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Grounded") == false) //点击地面
         {
             return;
         }
@@ -27,13 +31,14 @@ public class PlayerMove : MonoBehaviour {
 
         if (Mathf.Abs(h) > 0 || Mathf.Abs(v) > 0)
         {
-            transform.Translate(new Vector3(h, 0, v) * speed * Time.deltaTime, Space.World);
-
-            transform.rotation = Quaternion.LookRotation(new Vector3(h, 0, v));
+            transform.Translate(new Vector3(h, 0, v) * speed * Time.deltaTime, Space.World); //走向
+            transform.rotation = Quaternion.LookRotation(new Vector3(h, 0, v));  //看向
 
             float res = Mathf.Max(Mathf.Abs(h), Mathf.Abs(v));
             forward = res;
             anim.SetFloat("Forward", res);
         }
 	}
+    #endregion
+   
 }

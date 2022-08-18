@@ -1,5 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/18 11:18:03
+	功能：这个是用来管理跟服务器端的Socket连接
+
+*****************************************************/
+
 using UnityEngine;
 using System.Net.Sockets;
 using System;
@@ -8,10 +15,9 @@ using System.Text;
 using System.Linq;
 using System.Net;
 
-/// <summary>
-/// 这个是用来管理跟服务器端的Socket连接
-/// </summary>
-public class ClientMgr :BaseManager {
+
+public class ClientMgr :BaseManager 
+{
 
     private const string IP = DefinePath.ClientMgr_IP;
     private const int PORT = DefinePath.ClientMgr_PORT;
@@ -24,7 +30,7 @@ public class ClientMgr :BaseManager {
 
 
     #region 生命
- public override void OnInit()
+     public override void OnInit()
     {
         base.OnInit();
         clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);

@@ -1,7 +1,16 @@
-﻿using System;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/18 11:10:14
+	功能：大厅左边面板的人物战绩显示
+
+*****************************************************/
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
+
 
 public class UpdateResultRequest:BaseRequest
 {

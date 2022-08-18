@@ -48,6 +48,7 @@ public class CreateRoomRequest :BaseRequest
         ReturnCode returnCode = (ReturnCode)int.Parse(strs[0]);
         RoleType roleType = (RoleType)int.Parse(strs[1]);
         facade.SetCurrentRoleType(roleType);
+
         if (returnCode == ReturnCode.Success)
         {
             roomPanel.SetLocalPlayerResAsync();

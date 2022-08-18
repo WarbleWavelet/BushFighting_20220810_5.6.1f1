@@ -1,7 +1,17 @@
-﻿using System.Collections;
+﻿/****************************************************
+
+	文件：
+	作者：WWS
+	日期：2022/08/18 11:11:01
+	功能：结束倒计时，开始战斗
+
+*****************************************************/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Protocol;
+
 
 public class StartPlayRequest : BaseRequest {
 
@@ -17,7 +27,6 @@ public class StartPlayRequest : BaseRequest {
     {
         if (isStartPlaying)
         {
-            return;
             facade.StartPlaying();
             isStartPlaying = false;
         }

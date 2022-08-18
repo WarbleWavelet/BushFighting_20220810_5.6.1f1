@@ -22,12 +22,16 @@ public class GameFacade : MonoBehaviour
     private static GameFacade _instance;
     public static GameFacade Instance
     {
-        get
+        get//facade释放，有的client还没释放，会报null
         {
-            if ( _instance == null)
+            GameObject go = GameObject.Find("GameFacade");
+            if (go == null)
             {
-                _instance = GameObject.Find("GameFacade").GetComponent<GameFacade>();
+                return null;
             }
+
+            _instance = GameObject.Find("GameFacade").GetComponent<GameFacade>();
+
             return _instance;
         }
     }
@@ -61,7 +65,10 @@ public class GameFacade : MonoBehaviour
     }
 
     #region 生命
-
+    void Awake()
+    {
+        //Screen.SetResolution(1280,800,false);//设置分辨率
+    }
 
     void Start ()
     {
@@ -73,7 +80,6 @@ public class GameFacade : MonoBehaviour
         UpdateManager();
         if (isEnterPlaying)//从开始游戏进入开始战斗的计时
         {
-            return;
             EnterPlaying();
             isEnterPlaying = false;
         }
@@ -210,7 +216,7 @@ public class GameFacade : MonoBehaviour
     }
     public GameObject GetCurrentRoleGameObject()
     {
-        return playerMgr.GetCurrentRoleGameObject();
+        return playerMgr.GetCurRoleGameObject();
     }
 
 
@@ -224,13 +230,16 @@ public class GameFacade : MonoBehaviour
     }
 
     /// <summary>
-    /// 从开始游戏进入开始战斗的过程
+    /// 从开始游戏进入开始战斗的过程 （倒计时中）
     /// </summary>
     private void EnterPlaying()
     {
         playerMgr.SpawnRoles();
         cameraMgr.FollowRole();
     }
+
+
+    /// <summary>开始战斗</summary> 
     public void StartPlaying()
     {
         playerMgr.AddControlScript();
@@ -242,6 +251,7 @@ public class GameFacade : MonoBehaviour
     }
     #endregion  
   
+
     public void GameOver()
     {
         cameraMgr.WalkthroughScene();

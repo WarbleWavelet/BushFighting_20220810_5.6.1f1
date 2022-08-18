@@ -143,11 +143,11 @@ namespace GameServer.Servers
         /// <param name="client"></param>
         public void QuitRoom(Client client)
         {
-            if (client.IsHouseOwner())//房主嘉会解散房间
+            if (client.IsHouseOwner())//房主退出解散房间
             {
                 Close();
             }
-            else
+            else//成员退出就退出
             {
                 clientLst.Remove(client);
             }

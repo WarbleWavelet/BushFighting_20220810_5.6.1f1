@@ -70,5 +70,12 @@
       <FileName>Assets\Scripts\Request\StartGameRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="GameFacade" Collapsed="true">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oCQFoBggBCAAAAAAAhAEAASCAAAAIAAoQAAhMAEgBEk=</HashCode>
+      <FileName>Assets\Scripts\GameFacade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
 </ClassDiagram>

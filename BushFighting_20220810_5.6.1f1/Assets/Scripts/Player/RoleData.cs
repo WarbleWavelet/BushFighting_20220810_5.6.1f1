@@ -3,7 +3,7 @@
 	文件：
 	作者：WWS
 	日期：2022/08/16 18:04:32
-	功能：人物上挂载的所有物体
+	功能：人物上挂载的所有物体、组件、脚本
 
 *****************************************************/
 using System.Collections;
@@ -27,9 +27,9 @@ public class RoleData
     public RoleData(RoleType roleType,string rolePath,string arrowPath,string explosionPath, Transform spawnPos)
     {
         this.RoleType = roleType;
-        this.RolePrefab = Resources.Load(PREFIX_PREFAB+ rolePath) as GameObject;
-        this.ArrowPrefab = Resources.Load(PREFIX_PREFAB + arrowPath) as GameObject;
-        this.ExplostionEffect = Resources.Load(PREFIX_PREFAB + explosionPath) as GameObject;
+        this.RolePrefab = Resources.Load( PREFIX_PREFAB + rolePath) as GameObject;
+        this.ArrowPrefab = Resources.Load( PREFIX_PREFAB + arrowPath) as GameObject;
+        this.ExplostionEffect = Resources.Load( PREFIX_PREFAB + explosionPath) as GameObject;
         ArrowPrefab.GetComponent<Arrow>().explosionEffect = ExplostionEffect;
         this.SpawnPosition = spawnPos.position;
     }

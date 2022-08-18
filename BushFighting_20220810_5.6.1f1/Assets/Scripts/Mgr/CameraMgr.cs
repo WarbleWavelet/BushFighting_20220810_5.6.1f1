@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class CameraMgr : BaseManager
 {
@@ -13,7 +14,7 @@ public class CameraMgr : BaseManager
     private Vector3 originalPosition;
     private Vector3 originalRotation;
 
-    bool getKeyCodeRetuen = false;
+    bool getKeyCodeRetuen = false;//test
     bool getKeyCodeEsc = false;
 
     public CameraMgr(GameFacade facade) : base(facade) { }
@@ -33,21 +34,28 @@ public class CameraMgr : BaseManager
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && getKeyCodeRetuen == false && getKeyCodeEsc==false) ///回车
+
+
+       // Test_CameraTween();
+    }
+  
+    #endregion
+  /// <summary>
+   /// 测试相机的推进拉远，Update
+   /// </summary>
+    private void Test_CameraTween()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && getKeyCodeRetuen == false && getKeyCodeEsc == false) ///回车 ，防止多次按下
         {
             getKeyCodeRetuen = true;
-              FollowRole();
+            FollowRole();
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && getKeyCodeRetuen==false && getKeyCodeEsc == false) //Esc
+        if (Input.GetKeyDown(KeyCode.Escape) && getKeyCodeRetuen == false && getKeyCodeEsc == false) //Esc           
         {
             getKeyCodeEsc = true;
-              WalkthroughScene();
+            WalkthroughScene();
         }
-
-
     }
-    #endregion
-
 
     /// <summary>
     /// 相机跟随主角
@@ -55,8 +63,8 @@ public class CameraMgr : BaseManager
     public void FollowRole()
     {
           cameraAnim.enabled = false;         
-        //followTarget.target = facade.GetCurrentRoleGameObject().transform;
-        followTarget.target = GameObject.FindWithTag(Tags.Player).transform;
+        followTarget.target = facade.GetCurrentRoleGameObject().transform;
+        //followTarget.target = GameObject.FindWithTag(Tags.Player).transform;//测试用的
       
         originalPosition = cameraGo.transform.position;
         originalRotation = cameraGo.transform.eulerAngles;

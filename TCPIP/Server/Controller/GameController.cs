@@ -70,6 +70,14 @@ namespace GameServer.Controller
                 
             return null;
         }
+
+        /// <summary>
+        /// 射击
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="client"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         public string Shoot(string data, Client client, Server server)
         {
             Room room = client.Room;
